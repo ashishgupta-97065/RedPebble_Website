@@ -3,6 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<title>RedPebble — AI Advisory for Executives</title>
+<meta name="description" content="RedPebble is an AI advisory practice helping executives turn AI into real business outcomes.">
 <script src="./support.js"></script>
 </head>
 <body>
@@ -268,14 +270,14 @@ class Component extends DCLogic {
       if(btn){ btn.textContent='Send it \u2192'; btn.disabled=false; btn.style.opacity='1'; }
       f.reset();
     };
-    fetch('https://formsubmit.co/ajax/ashishgupta7065@gmail.com',{
+    fetch('https://formsubmit.co/ajax/ashishgupta97065@gmail.com',{
       method:'POST',
       headers:{'Content-Type':'application/json','Accept':'application/json'},
       body:JSON.stringify(data)
     }).then(r=>r.json()).then(()=>showThanks()).catch(()=>{
       // graceful fallback: open mail client pre-filled
       const body=encodeURIComponent('Name: '+(data.name||'')+'\nEmail: '+(data.email||'')+'\nPhone: '+(data.phone||'')+'\nCompany: '+(data.company||'')+'\n\n'+(data.comment||''));
-      window.location.href='mailto:ashishgupta7065@gmail.com?subject='+encodeURIComponent(data._subject)+'&body='+body;
+      window.location.href='mailto:ashishgupta97065@gmail.com?subject='+encodeURIComponent(data._subject)+'&body='+body;
       showThanks();
     });
   }
