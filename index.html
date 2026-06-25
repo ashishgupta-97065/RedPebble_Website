@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<!-- ============================================================
+     SWAP THESE TWO LINES when you have final wording.
+     Everything visible on screen is controlled below in <body>.
+     ============================================================ -->
+<title>Coming soon</title>
+<meta name="description" content="A new AI advisory practice. Launching soon." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400&family=IBM+Plex+Mono:wght@400&display=swap" rel="stylesheet" />
+
+<style>
+  :root {
+    --bg:        #0a0c0f;   /* deep water at night */
+    --bg-edge:   #060708;   /* vignette edge       */
+    --pebble:    #e02b1d;   /* the one red         */
+    --pebble-lit:#ff4a3a;   /* highlight on pebble */
+    --ink:       #e8e6e1;   /* primary text        */
+    --muted:     #6b7178;   /* secondary text      */
+    --ripple:    255, 255, 255;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html, body { height: 100%; }
+
+  body {
+    background: radial-gradient(120% 100% at 50% 38%, var(--bg) 0%, var(--bg-edge) 100%);
+    color: var(--ink);
+    font-family: "Fraunces", Georgia, serif;
+    min-height: 100svh;
+    display: grid;
+    place-items: center;
+    text-align: center;
+    overflow: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .stage {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2.75rem;
+    padding: 2rem;
+  }
+
+  /* --- the signature: pebble + ripples --- */
+  .scene {
+    position: relative;
+    width: 220px;
+    height: 220px;
+    display: grid;
+    place-items: center;
+  }
+
+  .pebble {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 30%, var(--pebble-lit), var(--pebble) 60%, #8a1810 100%);
+    box-shadow:
+      0 0 18px 2px rgba(224, 43, 29, 0.45),
+      0 0 60px 8px rgba(224, 43, 29, 0.20);
+    z-index: 2;
+  }
+
+  .ripple {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    border: 1px solid rgba(var(--ripple), 0.5);
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0;
+    animation: ripple 5.5s ease-out infinite;
+  }
+  .ripple:nth-child(2) { animation-delay: 1.8s; }
+  .ripple:nth-child(3) { animation-delay: 3.6s; }
+
+  @keyframes ripple {
+    0%   { transform: translate(-50%, -50%) scale(1);   opacity: 0.55; }
+    100% { transform: translate(-50%, -50%) scale(8);   opacity: 0; }
+  }
+
+  /* --- text --- */
+  .eyebrow {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.42em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-indent: 0.42em; /* balance the trailing letter-spacing */
+  }
+
+  .line {
+    font-weight: 300;
+    font-size: clamp(1.35rem, 4.5vw, 2.1rem);
+    line-height: 1.35;
+    max-width: 22ch;
+    color: var(--ink);
+  }
+
+  .contact {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.78rem;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: color 0.25s ease, border-color 0.25s ease;
+  }
+  .contact:hover, .contact:focus-visible {
+    color: var(--ink);
+    border-color: var(--muted);
+    outline: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ripple { animation: none; opacity: 0.18; }
+  }
+</style>
+</head>
+<body>
+  <main class="stage">
+    <div class="scene" aria-hidden="true">
+      <span class="ripple"></span>
+      <span class="ripple"></span>
+      <span class="ripple"></span>
+      <span class="pebble"></span>
+    </div>
+
+    <!-- ============================================================
+         EDIT THE THREE BLOCKS BELOW — this is everything on screen.
+         ============================================================ -->
+
+    <!-- 1. Eyebrow: practice name, or remove this line entirely -->
+    <p class="eyebrow">Launching 2026</p>
+
+    <!-- 2. The one line -->
+    <h1 class="line">A new AI advisory practice, arriving soon.</h1>
+
+    <!-- 3. Optional contact — change the email, or delete the link -->
+    <a class="contact" href="mailto:hello@example.com">hello@example.com</a>
+  </main>
+</body>
+</html>
