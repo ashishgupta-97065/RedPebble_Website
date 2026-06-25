@@ -1,0 +1,9 @@
+{
+  // Cloudflare Workers config for a static (assets-only) site.
+  // No server code — Cloudflare just serves the files in ./public.
+  "name": "redpebble-website",
+  "compatibility_date": "2024-11-01",
+  "assets": {
+    "directory": "./public"
+  }
+}
