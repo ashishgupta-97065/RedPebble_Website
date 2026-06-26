@@ -258,8 +258,9 @@ class Component extends DCLogic {
   bindReveal(){
     const sc=this.scrollerRef.current; this._secs=[...sc.querySelectorAll('.rp-sec')];
     sc.addEventListener('scroll',()=>{ this._needDraw=true; const f=sc.scrollTop/Math.max(1,this.ch); if(this.logoRef.current) this.logoRef.current.style.opacity=(f>5.3?'0':'1'); { const onForm=f>5.3; if(this.navCtaRef.current){ this.navCtaRef.current.style.opacity=onForm?'0':'1'; this.navCtaRef.current.style.pointerEvents=onForm?'none':'auto'; } } if(!this._animating){ this.setActive(Math.max(0,Math.min(6,Math.round(f)))); } });
-    this._wheel=(ev)=>{ if(this.active===6) return; ev.preventDefault(); const now=performance.now(); if(this._animating || now-(this._navAt||0)<1000) return; this._navAt=now; this.goTo(this.active + (ev.deltaY>0?1:-1)); };
-    sc.addEventListener('wheel', this._wheel, { passive:false });
+    // Native CSS scroll-snap (y mandatory + scroll-snap-stop:always on each section)
+    // handles paging: one section per gesture, real momentum, cannot skip past a
+    // snap point (per spec). No wheel hijack — that was the source of skipping.
     const dots=this.railRef.current.querySelectorAll('[data-dot]');
     dots.forEach(btn=>btn.addEventListener('click',()=>{ this.goTo(+btn.dataset.dot); }));
     this._needDraw=true; this.setActive(0);
