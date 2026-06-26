@@ -188,7 +188,7 @@ class Component extends DCLogic {
     ctx.textAlign='center'; ctx.textBaseline='alphabetic';
     const sc=this.scrollerRef.current; const st=sc?sc.scrollTop:0; const f=st/Math.max(1,h); const k0=Math.floor(f);
     for(let k=k0;k<=k0+1;k++){ if(k<0||k>6) continue; this.drawSection(k,(k-f)*h + h*0.5); }
-    if(this._logoImg && this._logoImg.complete && this._logoImg.naturalWidth){ const lh=60, lw=lh*(this._logoImg.naturalWidth/this._logoImg.naturalHeight); const fade=Math.max(0,Math.min(1,(5.6-f)/0.6)); if(fade>0.01){ ctx.globalAlpha=fade; ctx.drawImage(this._logoImg,(w-lw)/2,78,lw,lh); ctx.globalAlpha=1; } }
+    if(this._logoImg && this._logoImg.complete && this._logoImg.naturalWidth){ const lh=42, lw=lh*(this._logoImg.naturalWidth/this._logoImg.naturalHeight); const fade=Math.max(0,Math.min(1,(5.6-f)/0.6)); if(fade>0.01){ ctx.globalAlpha=fade; ctx.save(); const fs=25; ctx.font='600 '+fs+'px "Space Grotesk",sans-serif'; ctx.textAlign='left'; ctx.textBaseline='middle'; const parts=[['Red','#e40f00'],['Pebble','#ffffff'],['.ai','rgba(255,255,255,.5)']]; let tw=0; for(const p of parts) tw+=ctx.measureText(p[0]).width; const gap=11, gw=lw+gap+tw, gx=(w-gw)/2, cy=78+lh/2; ctx.drawImage(this._logoImg,gx,78,lw,lh); let tx=gx+lw+gap; for(const p of parts){ ctx.fillStyle=p[1]; ctx.fillText(p[0],tx,cy); tx+=ctx.measureText(p[0]).width; } ctx.restore(); ctx.globalAlpha=1; } }
     gl.bindTexture(gl.TEXTURE_2D,this.contentTex);
     gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL,true);
     gl.texImage2D(gl.TEXTURE_2D,0,gl.RGBA,gl.RGBA,gl.UNSIGNED_BYTE,this.contentCanvas);
