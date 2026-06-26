@@ -1,0 +1,6 @@
+# Version history / experiments — not deployed
+archive/
+.DS_Store
+__MACOSX/
+.thumbnail
+node_modules/

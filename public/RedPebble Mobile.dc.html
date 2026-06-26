@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;1,500&family=Manrope:wght@400;500;600;700&family=Montserrat:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{ --rp-red:#e40f00; --rp-red-rgb:228,15,0; --rp-ink:#f6f7f8; }
+  html,body{ margin:0; padding:0; height:100%; background:#000; }
+  *{ box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+  ::-webkit-scrollbar{ width:0; height:0; }
+  .rp-dot{display:block;width:7px;height:7px;border-radius:99px;background:rgba(255,255,255,.28);transition:height .45s cubic-bezier(.2,.7,.2,1),background .45s,box-shadow .45s;}
+  .rp-dot.on{height:26px;background:var(--rp-red);box-shadow:0 0 16px rgba(var(--rp-red-rgb),.75);}
+  .rp-field{width:100%;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.14);border-radius:12px;padding:11px 15px;color:#f6f7f8;font-family:'Montserrat',sans-serif;font-size:16px;font-weight:500;outline:none;transition:border-color .25s,background .25s,box-shadow .25s;}
+  .rp-field::placeholder{color:rgba(246,247,248,.4);font-weight:400;}
+  .rp-field:focus{border-color:rgba(var(--rp-red-rgb),.85);background:rgba(255,255,255,.09);box-shadow:0 0 0 3px rgba(var(--rp-red-rgb),.18);}
+  textarea.rp-field{resize:none;line-height:1.55;}
+  .rp-rotate{position:fixed;inset:0;z-index:200;display:none;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:16px;background:#000;padding:40px;}
+  @media (orientation:landscape) and (pointer:coarse){ .rp-rotate{display:flex;} }
+</style>
+<script src="./redpebble-shared.js"></script>
+</helmet>
+<div ref="{{ rootRef }}" style="position:fixed; inset:0; background:#000; color:var(--rp-ink); font-family:'Montserrat',sans-serif; overflow:hidden; -webkit-font-smoothing:antialiased;">
+
+  <canvas ref="{{ fxRef }}" style="position:absolute; inset:0; z-index:0; display:block; pointer-events:none;"></canvas>
+
+  <div class="rp-rotate">
+    <svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="var(--rp-red)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="2" width="10" height="20" rx="2.5"></rect><path d="M2 9 a6 6 0 0 1 6 -6" stroke="rgba(246,247,248,.45)"></path><polyline points="2 6 2 9 5 9" stroke="rgba(246,247,248,.45)"></polyline></svg>
+    <div style="font-family:'Montserrat',sans-serif; font-weight:600; font-size:20px; color:#fff;">Rotate to portrait</div>
+    <div style="font-family:'Montserrat',sans-serif; font-weight:500; font-size:14px; color:rgba(246,247,248,.7); max-width:300px; line-height:1.55;">RedPebble is crafted for portrait. Please turn your device upright.</div>
+  </div>
+
+
+  <div ref="{{ barRef }}" style="position:absolute; top:0; left:0; right:0; z-index:30; display:flex; align-items:center; justify-content:flex-end; padding:15px 18px;">
+    <div style="display:flex; align-items:center; gap:9px;">
+      <a ref="{{ skipRef }}" href="?view=desktop" title="Skip the Pebble \u2014 view the desktop experience" style="display:none; align-items:center; gap:7px; font-family:'Montserrat',sans-serif; font-weight:500; font-size:12.5px; letter-spacing:.02em; color:#fff; text-decoration:none; border:1px solid rgba(255,255,255,.28); background:rgba(255,255,255,.06); padding:9px 15px; border-radius:999px;">Skip the Pebble<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a>
+      <button ref="{{ navCtaRef }}" style="font-family:'Montserrat',sans-serif; font-weight:600; font-size:12.5px; letter-spacing:.03em; color:#fff; background:var(--rp-red); border:none; padding:9px 17px; border-radius:999px; cursor:pointer; box-shadow:0 6px 20px rgba(var(--rp-red-rgb),.4); transition:opacity .35s ease;">Talk to us</button>
+    </div>
+  </div>
+
+  <div ref="{{ railRef }}" style="position:absolute; top:50%; right:13px; transform:translateY(-50%); z-index:25; display:flex; flex-direction:column; align-items:center; gap:12px;">
+    <sc-for list="{{ dots }}" as="d" hint-placeholder-count="7">
+      <button data-dot="{{ d }}" aria-label="Go to section" style="border:none; background:none; padding:6px 4px; margin:0; cursor:pointer; display:flex; align-items:center; justify-content:center;"><span class="rp-dot"></span></button>
+    </sc-for>
+  </div>
+
+  <div ref="{{ scrollerRef }}" style="position:absolute; inset:0; z-index:10; overflow-y:scroll; scroll-snap-type:y mandatory; -webkit-overflow-scrolling:touch;">
+    <section class="rp-sec" style="height:100svh; scroll-snap-align:start; scroll-snap-stop:always;"></section>
+    <section class="rp-sec" style="height:100svh; scroll-snap-align:start; scroll-snap-stop:always;"></section>
+    <section class="rp-sec" style="height:100svh; scroll-snap-align:start; scroll-snap-stop:always;"></section>
+    <section class="rp-sec" style="height:100svh; scroll-snap-align:start; scroll-snap-stop:always;"></section>
+    <section class="rp-sec" style="height:100svh; scroll-snap-align:start; scroll-snap-stop:always;"></section>
+    <section class="rp-sec" style="height:100svh; scroll-snap-align:start; scroll-snap-stop:always;"></section>
+    <section class="rp-sec" style="position:relative; height:100svh; scroll-snap-align:start; scroll-snap-stop:always; display:flex; align-items:flex-start; justify-content:center; overflow-y:auto; -webkit-overflow-scrolling:touch;">
+      <div style="width:100%; max-width:412px; padding:46px 22px 40px;">
+        <div ref="{{ contactFormWrapRef }}">
+          <div style="display:flex; align-items:center; gap:15px;">
+            <img src="../assets/ashish.png" alt="Ashish Gupta" style="width:64px; height:64px; border-radius:999px; object-fit:cover; object-position:center 28%; border:2px solid rgba(255,255,255,.22); flex:0 0 auto;" />
+            <div>
+              <div style="font-family:'Montserrat',sans-serif; font-weight:600; font-size:18px; color:#fff;">Ashish Gupta</div>
+              <div style="font-family:'Montserrat',sans-serif; font-weight:500; font-size:12.5px; color:rgba(246,247,248,.62); margin-top:3px;">Chief AI Rippler, <span style="color:var(--rp-red);">RedPebble.ai</span></div>
+            </div>
+            <a href="https://www.linkedin.com/in/ashishgupta97065/" target="_blank" rel="noopener" aria-label="Connect on LinkedIn" style="margin-left:auto; flex:0 0 auto; width:38px; height:38px; border-radius:999px; display:flex; align-items:center; justify-content:center; color:#f6f7f8; text-decoration:none; border:1px solid rgba(255,255,255,.2); background:rgba(255,255,255,.05);"><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.34V9h3.42v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.55V9h3.57v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.72V1.72C24 .77 23.2 0 22.22 0z"/></svg></a>
+          </div>
+          <p style="font-family:'Montserrat',sans-serif; font-weight:500; font-size:14px; line-height:1.6; color:rgba(246,247,248,.74); margin:16px 0 0;">Post a 2-decade CTO stint across PolicyBazaar, Progcap, HealthKart &amp; Niva Bupa, I&rsquo;m now focused on helping organizations adopt AI in a meaningful way.</p>
+          <p style="font-family:'Montserrat',sans-serif; font-style:italic; font-weight:500; font-size:14px; line-height:1.6; color:var(--rp-red); margin:12px 0 0;">No theories, no fluff. Only Real Impact.</p>
+
+          <form ref="{{ contactFormRef }}" style="margin-top:14px; display:flex; flex-direction:column; gap:9px;">
+            <input class="rp-field" name="name" type="text" required placeholder="Your name" />
+            <input class="rp-field" name="email" type="email" required placeholder="you@company.com" />
+            <input class="rp-field" name="phone" type="tel" placeholder="Phone (optional)" />
+            <input class="rp-field" name="company" type="text" placeholder="Company" />
+            <textarea class="rp-field" name="comment" rows="2" placeholder="What would you like AI to take off your plate?"></textarea>
+            <button ref="{{ contactSubmitRef }}" type="submit" style="margin-top:4px; font-family:'Montserrat',sans-serif; font-weight:600; font-size:16px; border:none; cursor:pointer; padding:13px; border-radius:12px; background:var(--rp-red); color:#fff; box-shadow:0 12px 36px rgba(var(--rp-red-rgb),.42);">Send it &rarr;</button>
+          </form>
+        </div>
+
+        <div ref="{{ contactThanksRef }}" style="display:none; flex-direction:column; align-items:flex-start; justify-content:center; min-height:60vh;">
+          <div style="width:60px; height:60px; border-radius:999px; background:rgba(var(--rp-red-rgb),.16); border:1px solid rgba(var(--rp-red-rgb),.5); display:flex; align-items:center; justify-content:center; color:#ff5b4d; font-size:28px;">&#10003;</div>
+          <div style="font-family:'Montserrat',sans-serif; font-weight:500; font-size:38px; color:#fff; margin-top:22px;">Thank you.</div>
+          <p style="font-family:'Montserrat',sans-serif; font-weight:500; font-size:15px; line-height:1.6; color:rgba(246,247,248,.78); margin:14px 0 0;">Your note is on its way to Ashish. We&rsquo;ll be in touch shortly &mdash; the first ripple is already moving.</p>
+          <button ref="{{ contactResetRef }}" type="button" style="margin-top:28px; font-family:'Montserrat',sans-serif; font-weight:600; font-size:13px; cursor:pointer; padding:12px 22px; border-radius:999px; border:1px solid rgba(255,255,255,.22); background:rgba(255,255,255,.05); color:#f6f7f8;">Back to the ripples</button>
+        </div>
+      </div>
+    </section>
+  </div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:402,&quot;height&quot;:874},&quot;accent&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#e40f00&quot;,&quot;options&quot;:[&quot;#e40f00&quot;,&quot;#ff3b2f&quot;,&quot;#b00d00&quot;],&quot;tsType&quot;:&quot;string&quot;},&quot;showRail&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;}}">
+class Component extends DCLogic {
+  constructor(props){
+    super(props);
+    this._refs=['rootRef','fxRef','barRef','railRef','scrollerRef','navCtaRef','logoRef','skipRef','contactFormRef','contactFormWrapRef','contactThanksRef','contactResetRef','contactSubmitRef'];
+    this._refs.forEach(r=>this[r]=React.createRef());
+    this.active=-1; this.lastT=0; this.acc=0; this.frame=0; this.dropProgress=1.0; this.nextTrigger=0.9; this.pending=null;
+    this.P={ startPoint:0.20, triggerMin:0.70, triggerMax:0.90, sharpness:12.0, ringThick:0.007, force:0.11, lifetime:200, speedHz:52, damping:0.982, glint:6.0, ignoreCenter:0.35, refract:0.45 };
+  }
+  hexRgb(h){ h=(h||'#e40f00').replace('#',''); if(h.length===3)h=h.split('').map(c=>c+c).join(''); const n=parseInt(h,16); return ((n>>16)&255)+','+((n>>8)&255)+','+(n&255); }
+  renderVals(){
+    const o={}; this._refs.forEach(r=>o[r]=this[r]);
+    o.dots=[0,1,2,3,4,5,6];
+    this.hops=[
+      { num:'01', t1:'AI,', t2:'Tailored to You', sub:'AI services that understand your process and get AI to adapt to you, not the other way round.' },
+      { num:'02', t1:'Real KPIs,', t2:'Real Solutions', bullets:['100% AI-written code','300-person manpower automated','80% TAT reduction','90% fewer errors'], tail:'No fluff \u2014 just impact.' },
+      { num:'03', t1:'From Copilot', t2:'to Autopilot', bullets:['Humans have office hours. AI shouldn\u2019t.','Get 300% more via 24\u00d77 agents.'] },
+      { num:'04', t1:'Ownership Is', t2:'Everything', sub:'Own every AI asset we build for you: control your destiny, forever.' },
+      { num:'05', t1:'Ubiquitous', t2:'& Efficacious', bullets:['Development','Operations','Calling','Content & Media','Analytics','Sales'], tail:'Every process, transformed.' },
+    ];
+    return o;
+  }
+  componentDidMount(){
+    this.accentRGB=this.hexRgb(this.props.accent);
+    this._rgb=this.accentRGB.split(',').map(n=>parseInt(n,10)/255);
+    if(this.props.accent && this.props.accent!=='#e40f00'){ document.documentElement.style.setProperty('--rp-red',this.props.accent); document.documentElement.style.setProperty('--rp-red-rgb',this.accentRGB); }
+    if(this.props.showRail===false && this.railRef.current) this.railRef.current.style.display='none';
+    const _coarse=window.matchMedia('(pointer: coarse)').matches||(navigator.maxTouchPoints||0)>0;
+    if(!_coarse && this.skipRef.current) this.skipRef.current.style.display='inline-flex';
+    this.initGL();
+    this.bindUI();
+    this.bindReveal();
+    this._loop=(t)=>this.loop(t); this.raf=requestAnimationFrame(this._loop);
+    if(document.fonts && document.fonts.ready){ document.fonts.ready.then(()=>{ this._needDraw=true; }); }
+  }
+  componentWillUnmount(){
+    cancelAnimationFrame(this.raf);
+    if(this._rz) window.removeEventListener('resize',this._rz);
+    if(this._pd) window.removeEventListener('pointerdown',this._pd);
+    if(this._wheel && this.scrollerRef.current) this.scrollerRef.current.removeEventListener('wheel',this._wheel);
+    if(this.io) this.io.disconnect();
+  }
+  // ---------- WebGL ----------
+  initGL(){
+    const cv=this.fxRef.current;
+    const opts={ antialias:false, depth:false, alpha:false, premultipliedAlpha:false };
+    const gl=this.gl=cv.getContext('webgl',opts)||cv.getContext('experimental-webgl',opts);
+    if(!gl){ return; }
+    const extF=gl.getExtension('OES_texture_float'), extHF=gl.getExtension('OES_texture_half_float');
+    const lf=gl.getExtension('OES_texture_float_linear'), lhf=gl.getExtension('OES_texture_half_float_linear');
+    const cbf=gl.getExtension('WEBGL_color_buffer_float'), cbhf=gl.getExtension('EXT_color_buffer_half_float');
+    this._extHF=extHF;
+    this.RT=(extHF&&(cbhf||cbf))?extHF.HALF_FLOAT_OES:((extF&&cbf)?gl.FLOAT:(extHF?extHF.HALF_FLOAT_OES:(extF?gl.FLOAT:gl.UNSIGNED_BYTE)));
+    this.SIM_FILTER=(this.RT===gl.UNSIGNED_BYTE||(this.RT===gl.FLOAT&&lf)||(extHF&&this.RT===extHF.HALF_FLOAT_OES&&lhf))?gl.LINEAR:gl.NEAREST;
+    const VERT='attribute vec2 p; varying vec2 uv; void main(){ uv=p*0.5+0.5; gl_Position=vec4(p,0.,1.); }';
+    const SIM='precision highp float; varying vec2 uv; uniform sampler2D prev; uniform vec2 res; uniform vec2 asp; uniform float drop; uniform vec2 dpos; uniform float dforce,dradius,dthick; uniform int dmode; uniform float damping; void main(){ vec2 px=1.0/res; float cur=texture2D(prev,uv).r; float old=texture2D(prev,uv).g; float s=texture2D(prev,uv+vec2(px.x,0.)).r+texture2D(prev,uv-vec2(px.x,0.)).r+texture2D(prev,uv+vec2(0.,px.y)).r+texture2D(prev,uv-vec2(0.,px.y)).r; float nh=s*0.5-old; nh*=damping; if(drop>0.5){ float d=distance(uv*asp,dpos*asp); float prof; if(dmode==1){ prof=1.0-smoothstep(dradius-dthick,dradius+dthick,d);} else { prof=exp(-pow((d-dradius)/max(dthick,0.0005),2.0)); } nh+=prof*dforce; } gl_FragColor=vec4(nh,cur,0.0,1.0); }';
+    const REN='precision highp float; varying vec2 uv; uniform sampler2D height; uniform sampler2D content; uniform vec2 res; uniform float refract; uniform float glint; uniform float sharp; uniform vec3 rgb; void main(){ vec2 px=1.0/res; float hl=texture2D(height,uv-vec2(px.x,0.)).r; float hr=texture2D(height,uv+vec2(px.x,0.)).r; float ht=texture2D(height,uv+vec2(0.,px.y)).r; float hb=texture2D(height,uv-vec2(0.,px.y)).r; vec2 grad=vec2(hr-hl,ht-hb); vec2 ruv=uv-grad*refract; vec3 c=texture2D(content,ruv).rgb; float g=clamp(length(grad)*glint,0.0,1.0); c+=vec3(1.0)*pow(g,sharp)*0.85; c+=rgb*g*0.45; gl_FragColor=vec4(c,1.0); }';
+    this.simP=this._prog(VERT,SIM); this.renP=this._prog(VERT,REN);
+    this.quad=gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER,this.quad); gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1,1,-1,-1,1,1,1]),gl.STATIC_DRAW);
+    this.contentCanvas=document.createElement('canvas'); this.cctx=this.contentCanvas.getContext('2d');
+    this.contentTex=gl.createTexture();
+    this._logoImg=new Image(); this._logoImg.onload=()=>{ this._needDraw=true; }; this._logoImg.src='../assets/redpebble-logo-white.png';
+    this._rz=()=>this.resizeGL(); window.addEventListener('resize',this._rz); this.resizeGL();
+  }
+  _sh(src,t){ const gl=this.gl; const s=gl.createShader(t); gl.shaderSource(s,src); gl.compileShader(s); return s; }
+  _prog(v,f){ const gl=this.gl; const p=gl.createProgram(); gl.attachShader(p,this._sh(v,gl.VERTEX_SHADER)); gl.attachShader(p,this._sh(f,gl.FRAGMENT_SHADER)); gl.linkProgram(p); return p; }
+  _bindQuad(p){ const gl=this.gl; const l=gl.getAttribLocation(p,'p'); gl.bindBuffer(gl.ARRAY_BUFFER,this.quad); gl.enableVertexAttribArray(l); gl.vertexAttribPointer(l,2,gl.FLOAT,false,0,0); }
+  _U(p,n){ return this.gl.getUniformLocation(p,n); }
+  makeTarget(w,h){ const gl=this.gl; const tex=gl.createTexture(); gl.bindTexture(gl.TEXTURE_2D,tex);
+    gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MIN_FILTER,this.SIM_FILTER); gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MAG_FILTER,this.SIM_FILTER);
+    gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_S,gl.CLAMP_TO_EDGE); gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_T,gl.CLAMP_TO_EDGE);
+    gl.texImage2D(gl.TEXTURE_2D,0,gl.RGBA,w,h,0,gl.RGBA,this.RT,null);
+    const fb=gl.createFramebuffer(); gl.bindFramebuffer(gl.FRAMEBUFFER,fb); gl.framebufferTexture2D(gl.FRAMEBUFFER,gl.COLOR_ATTACHMENT0,gl.TEXTURE_2D,tex,0);
+    return {tex,fb,ok:gl.checkFramebufferStatus(gl.FRAMEBUFFER)===gl.FRAMEBUFFER_COMPLETE}; }
+  resizeGL(){ const gl=this.gl; if(!gl) return; this.dpr=Math.min(2,window.devicePixelRatio||1); const cv=this.fxRef.current;
+    this.cw=window.innerWidth; this.ch=window.innerHeight; cv.width=Math.floor(this.cw*this.dpr); cv.height=Math.floor(this.ch*this.dpr); cv.style.width=this.cw+'px'; cv.style.height=this.ch+'px';
+    const LONG=1100, scale=0.62; let w=Math.round(this.cw*scale), h=Math.round(this.ch*scale); const lg=Math.max(w,h); if(lg>LONG){ const k=LONG/lg; w=Math.round(w*k); h=Math.round(h*k); }
+    this.simW=Math.max(2,w); this.simH=Math.max(2,h);
+    this.A=this.makeTarget(this.simW,this.simH); this.B=this.makeTarget(this.simW,this.simH);
+    if((!this.A.ok||!this.B.ok)&&this.RT!==gl.UNSIGNED_BYTE){ this.RT=(this._extHF&&this.RT===gl.FLOAT)?this._extHF.HALF_FLOAT_OES:gl.UNSIGNED_BYTE; this.A=this.makeTarget(this.simW,this.simH); this.B=this.makeTarget(this.simW,this.simH); }
+    [this.A,this.B].forEach(t=>{ gl.bindFramebuffer(gl.FRAMEBUFFER,t.fb); gl.viewport(0,0,this.simW,this.simH); gl.clearColor(0,0,0,1); gl.clear(gl.COLOR_BUFFER_BIT); });
+    this.contentCanvas.width=Math.floor(this.cw); this.contentCanvas.height=Math.floor(this.ch);
+    this._needDraw=true;
+  }
+  // ---------- content texture (the refracted layer) ----------
+  _wrap(ctx,text,cx,y,maxW,lh){ const words=text.split(' '); let line=''; const lines=[]; for(const wd of words){ const t=line?line+' '+wd:wd; if(ctx.measureText(t).width>maxW && line){ lines.push(line); line=wd; } else line=t; } if(line) lines.push(line); for(const ln of lines){ ctx.fillText(ln,cx,y); y+=lh; } return y; }
+  drawScene(){
+    const gl=this.gl, ctx=this.cctx; if(!ctx||!gl) return;
+    ctx.setTransform(1,0,0,1,0,0);
+    const w=this.cw, h=this.ch;
+    ctx.clearRect(0,0,w,h); ctx.fillStyle='#000'; ctx.fillRect(0,0,w,h);
+    ctx.textAlign='center'; ctx.textBaseline='alphabetic';
+    const sc=this.scrollerRef.current; const st=sc?sc.scrollTop:0; const f=st/Math.max(1,h); const k0=Math.floor(f);
+    for(let k=k0;k<=k0+1;k++){ if(k<0||k>6) continue; this.drawSection(k,(k-f)*h + h*0.5); }
+    if(this._logoImg && this._logoImg.complete && this._logoImg.naturalWidth){ const lh=60, lw=lh*(this._logoImg.naturalWidth/this._logoImg.naturalHeight); const fade=Math.max(0,Math.min(1,(5.6-f)/0.6)); if(fade>0.01){ ctx.globalAlpha=fade; ctx.drawImage(this._logoImg,(w-lw)/2,78,lw,lh); ctx.globalAlpha=1; } }
+    gl.bindTexture(gl.TEXTURE_2D,this.contentTex);
+    gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL,true);
+    gl.texImage2D(gl.TEXTURE_2D,0,gl.RGBA,gl.RGBA,gl.UNSIGNED_BYTE,this.contentCanvas);
+    gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL,false);
+    gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MIN_FILTER,gl.LINEAR); gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MAG_FILTER,gl.LINEAR);
+    gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_S,gl.CLAMP_TO_EDGE); gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_T,gl.CLAMP_TO_EDGE);
+  }
+  _lines(ctx,text,maxW){ const words=text.split(' '); let line=''; const out=[]; for(const wd of words){ const t=line?line+' '+wd:wd; if(ctx.measureText(t).width>maxW && line){ out.push(line); line=wd; } else line=t; } if(line) out.push(line); return out; }
+  drawSection(k,yc){
+    const ctx=this.cctx, w=this.cw, cx=w/2, maxW=w-50, band=yc+32;
+    if(k===0){
+      const ts=Math.min(w*0.108,46), lh=ts*1.06;
+      ctx.font='600 '+ts+'px Montserrat,sans-serif';
+      const l1=this._lines(ctx,'Creating AI Ripples That',maxW), l2=this._lines(ctx,'Transform Your Organization',maxW);
+      ctx.font='500 16.5px Montserrat,sans-serif'; const bl=this._lines(ctx,'RedPebble drops AI into every part of your business, creating a tsunami of transformation.',Math.min(330,maxW));
+      const H=(l1.length+l2.length)*lh + 28 + bl.length*24;
+      let y=band - H/2 + ts;
+      ctx.font='600 '+ts+'px Montserrat,sans-serif';
+      ctx.fillStyle='#f6f7f8'; for(const ln of l1){ ctx.fillText(ln,cx,y); y+=lh; }
+      ctx.fillStyle='#e40f00'; for(const ln of l2){ ctx.fillText(ln,cx,y); y+=lh; }
+      y+=22; ctx.fillStyle='rgba(246,247,248,.8)'; ctx.font='500 16.5px Montserrat,sans-serif'; for(const ln of bl){ ctx.fillText(ln,cx,y); y+=24; }
+    } else if(k>=1 && k<=5){
+      const hp=this.hops[k-1];
+      const ts=Math.min(w*0.096,50), tlh=ts*1.06;
+      ctx.font='600 '+ts+'px Montserrat,sans-serif';
+      const tl1=this._lines(ctx,hp.t1,maxW), tl2=this._lines(ctx,hp.t2,maxW);
+      let subLines=null; if(hp.sub){ ctx.font='500 16.5px Montserrat,sans-serif'; subLines=this._lines(ctx,hp.sub,Math.min(330,maxW)); }
+      let H=(tl1.length+tl2.length)*tlh + 40;
+      if(subLines) H+=subLines.length*24;
+      if(hp.bullets) H+=hp.bullets.length*27;
+      if(hp.tail) H+=38+22;
+      ctx.save(); ctx.font='700 '+Math.min(this.ch*0.42,340)+'px Montserrat,sans-serif'; ctx.textBaseline='middle'; ctx.lineWidth=2; ctx.strokeStyle='rgba(228,15,0,.12)'; ctx.strokeText(hp.num, cx, band); ctx.restore(); ctx.textBaseline='alphabetic';
+      let y=band - H/2 + ts;
+      ctx.font='600 '+ts+'px Montserrat,sans-serif';
+      ctx.fillStyle='#f6f7f8'; for(const ln of tl1){ ctx.fillText(ln,cx,y); y+=tlh; }
+      ctx.fillStyle='#e40f00'; for(const ln of tl2){ ctx.fillText(ln,cx,y); y+=tlh; }
+      y+=14; ctx.fillStyle='#e40f00'; ctx.fillRect(cx-22,y,44,2); y+=24;
+      if(subLines){ ctx.fillStyle='rgba(246,247,248,.8)'; ctx.font='500 16.5px Montserrat,sans-serif'; for(const ln of subLines){ ctx.fillText(ln,cx,y); y+=24; } }
+      if(hp.bullets){ ctx.font='500 16.5px Montserrat,sans-serif'; ctx.textAlign='left'; let mbw=0; for(const b of hp.bullets) mbw=Math.max(mbw,ctx.measureText(b).width); const bx=cx-(mbw/2)+8; for(const b of hp.bullets){ y+=27; ctx.fillStyle='#e40f00'; ctx.beginPath(); ctx.arc(bx-15,y-5,3.5,0,6.2832); ctx.fill(); ctx.fillStyle='rgba(246,247,248,.8)'; ctx.fillText(b,bx,y); } ctx.textAlign='center'; }
+      if(hp.tail){ y+=38; ctx.fillStyle='#ff5b4d'; ctx.font='500 italic 21px Montserrat,sans-serif'; ctx.fillText(hp.tail,cx,y); }
+    }
+  }
+  randPos(){ const c=this.P.ignoreCenter; let x,y,tries=0; do{ x=0.08+Math.random()*0.84; y=0.14+Math.random()*0.72; tries++; } while(tries<16 && Math.abs(x-0.5)<c*0.5 && Math.abs(y-0.5)<c*0.5); return {x,y}; }
+  spawnDrop(nx,ny,strong){ this.pending={ x:nx, y:ny, force: strong?0.9:this.P.force, radius: strong?0.0:this.P.startPoint*0.30, thick: strong?0.05:this.P.ringThick, mode: strong?1:0 }; }
+  stepSim(){ const gl=this.gl; this.frame++;
+    let aDrop=null; this.dropProgress+=1.0/this.P.lifetime;
+    if(this.active!==6 && this.dropProgress>=this.nextTrigger){ this.dropProgress=this.P.startPoint; this.nextTrigger=this.P.triggerMin+Math.random()*Math.max(0.0001,this.P.triggerMax-this.P.triggerMin); const pp=this.randPos(); aDrop={ x:pp.x, y:pp.y, force:this.P.force, radius:this.P.startPoint*0.30, thick:this.P.ringThick, mode:0 }; }
+    gl.bindFramebuffer(gl.FRAMEBUFFER,this.B.fb); gl.viewport(0,0,this.simW,this.simH); gl.useProgram(this.simP); this._bindQuad(this.simP);
+    gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D,this.A.tex); gl.uniform1i(this._U(this.simP,'prev'),0);
+    gl.uniform2f(this._U(this.simP,'res'),this.simW,this.simH); gl.uniform2f(this._U(this.simP,'asp'),this.simW/this.simH,1.0); gl.uniform1f(this._U(this.simP,'damping'),this.P.damping);
+    const d=this.pending||aDrop;
+    if(d){ gl.uniform1f(this._U(this.simP,'drop'),1.0); gl.uniform2f(this._U(this.simP,'dpos'),d.x,d.y); gl.uniform1f(this._U(this.simP,'dforce'),d.force); gl.uniform1f(this._U(this.simP,'dradius'),d.radius||0.0); gl.uniform1f(this._U(this.simP,'dthick'),d.thick||0.05); gl.uniform1i(this._U(this.simP,'dmode'),d.mode|0); }
+    else { gl.uniform1f(this._U(this.simP,'drop'),0.0); gl.uniform1f(this._U(this.simP,'dforce'),0.0); gl.uniform1f(this._U(this.simP,'dradius'),0.0); gl.uniform1f(this._U(this.simP,'dthick'),0.05); gl.uniform1i(this._U(this.simP,'dmode'),0); }
+    gl.drawArrays(gl.TRIANGLE_STRIP,0,4); this.pending=null; const t=this.A; this.A=this.B; this.B=t; }
+  present(){ const gl=this.gl; const cv=this.fxRef.current; gl.bindFramebuffer(gl.FRAMEBUFFER,null); gl.viewport(0,0,cv.width,cv.height);
+    gl.useProgram(this.renP); this._bindQuad(this.renP);
+    gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D,this.A.tex); gl.uniform1i(this._U(this.renP,'height'),0);
+    gl.activeTexture(gl.TEXTURE1); gl.bindTexture(gl.TEXTURE_2D,this.contentTex); gl.uniform1i(this._U(this.renP,'content'),1);
+    gl.uniform2f(this._U(this.renP,'res'),this.simW,this.simH); gl.uniform1f(this._U(this.renP,'refract'),this.P.refract); gl.uniform1f(this._U(this.renP,'glint'),this.P.glint); gl.uniform1f(this._U(this.renP,'sharp'),this.P.sharpness);
+    gl.uniform3f(this._U(this.renP,'rgb'),this._rgb[0],this._rgb[1],this._rgb[2]); gl.drawArrays(gl.TRIANGLE_STRIP,0,4); }
+  loop(t){ const gl=this.gl; if(!gl){ this.raf=requestAnimationFrame(this._loop); return; }
+    if(!this.lastT) this.lastT=t; this.acc+=Math.min(100,t-this.lastT); this.lastT=t; const SIM_DT=1000/this.P.speedHz;
+    let steps=0; while(this.acc>=SIM_DT && steps<4){ this.stepSim(); this.acc-=SIM_DT; steps++; }
+    if(this._needDraw){ this.drawScene(); this._needDraw=false; }
+    this.present(); this.raf=requestAnimationFrame(this._loop); }
+  // ---------- DOM ----------
+  bindReveal(){
+    const sc=this.scrollerRef.current; this._secs=[...sc.querySelectorAll('.rp-sec')];
+    sc.addEventListener('scroll',()=>{ this._needDraw=true; const f=sc.scrollTop/Math.max(1,this.ch); if(this.logoRef.current) this.logoRef.current.style.opacity=(f>5.3?'0':'1'); { const onForm=f>5.3; if(this.navCtaRef.current){ this.navCtaRef.current.style.opacity=onForm?'0':'1'; this.navCtaRef.current.style.pointerEvents=onForm?'none':'auto'; } } if(!this._animating){ this.setActive(Math.max(0,Math.min(6,Math.round(f)))); } });
+    this._wheel=(ev)=>{ if(this.active===6) return; ev.preventDefault(); if(this._animating) return; this.goTo(this.active + (ev.deltaY>0?1:-1)); };
+    sc.addEventListener('wheel', this._wheel, { passive:false });
+    const dots=this.railRef.current.querySelectorAll('[data-dot]');
+    dots.forEach(btn=>btn.addEventListener('click',()=>{ this.goTo(+btn.dataset.dot); }));
+    this._needDraw=true; this.setActive(0);
+  }
+  goTo(i){
+    i=Math.max(0,Math.min(6,i)); const sc=this.scrollerRef.current; if(!sc||!this._secs[i]) return;
+    const to=this._secs[i].offsetTop, from=sc.scrollTop; if(Math.abs(to-from)<2){ this.setActive(i); return; }
+    this._animating=true; const t0=performance.now(), dur=2400; const ease=p=>p<0.5?4*p*p*p:1-Math.pow(-2*p+2,3)/2;
+    const step=(t)=>{ const p=Math.min(1,(t-t0)/dur); sc.scrollTop=from+(to-from)*ease(p); this._needDraw=true; if(p<1){ requestAnimationFrame(step); } else { this._animating=false; this.setActive(i); } };
+    requestAnimationFrame(step);
+  }
+  setActive(i){ if(this.active===i) return; this.active=i; const dots=this.railRef.current?this.railRef.current.querySelectorAll('[data-dot] .rp-dot'):[]; dots.forEach((d,di)=>d.classList.toggle('on',di===i)); }
+  bindUI(){
+    if(this.navCtaRef.current) this.navCtaRef.current.addEventListener('click',(e)=>{ e.preventDefault(); const sc=this.scrollerRef.current; const tt=this._secs&&this._secs[6]; if(tt) sc.scrollTo({ top:tt.offsetTop, behavior:'smooth' }); });
+    if(this.contactResetRef.current) this.contactResetRef.current.addEventListener('click',()=>{ if(this.contactFormWrapRef.current) this.contactFormWrapRef.current.style.display='block'; if(this.contactThanksRef.current) this.contactThanksRef.current.style.display='none'; });
+    if(this.contactFormRef.current) this.contactFormRef.current.addEventListener('submit',(e)=>this.submitContact(e));
+  }
+  submitContact(e){
+    e.preventDefault();
+    const f=this.contactFormRef.current; if(!f) return;
+    const btn=this.contactSubmitRef.current;
+    const data={}; new FormData(f).forEach((v,k)=>{ data[k]=v; });
+    if(btn){ btn.textContent='Sending\u2026'; btn.disabled=true; btn.style.opacity='.7'; }
+    const showThanks=()=>{
+      if(this.contactFormWrapRef.current) this.contactFormWrapRef.current.style.display='none';
+      if(this.contactThanksRef.current) this.contactThanksRef.current.style.display='flex';
+      if(btn){ btn.textContent='Send it \u2192'; btn.disabled=false; btn.style.opacity='1'; }
+      f.reset();
+    };
+    const send=(window.RedPebbleShared&&window.RedPebbleShared.sendContact)?window.RedPebbleShared.sendContact(data):Promise.resolve();
+    Promise.resolve(send).then(showThanks).catch(showThanks);
+  }
+}
+</script>
+</body>
+</html>
