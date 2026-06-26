@@ -258,7 +258,7 @@ class Component extends DCLogic {
   bindReveal(){
     const sc=this.scrollerRef.current; this._secs=[...sc.querySelectorAll('.rp-sec')];
     sc.addEventListener('scroll',()=>{ this._needDraw=true; const f=sc.scrollTop/Math.max(1,this.ch); if(this.logoRef.current) this.logoRef.current.style.opacity=(f>5.3?'0':'1'); { const onForm=f>5.3; if(this.navCtaRef.current){ this.navCtaRef.current.style.opacity=onForm?'0':'1'; this.navCtaRef.current.style.pointerEvents=onForm?'none':'auto'; } } if(!this._animating){ this.setActive(Math.max(0,Math.min(6,Math.round(f)))); } });
-    this._wheel=(ev)=>{ if(this.active===6) return; ev.preventDefault(); clearTimeout(this._wheelEnd); this._wheelEnd=setTimeout(()=>{ this._wheelLock=false; },180); if(this._animating || this._wheelLock) return; this._wheelLock=true; this.goTo(this.active + (ev.deltaY>0?1:-1)); };
+    this._wheel=(ev)=>{ if(this.active===6) return; ev.preventDefault(); const now=performance.now(); if(this._animating || now-(this._navAt||0)<1000) return; this._navAt=now; this.goTo(this.active + (ev.deltaY>0?1:-1)); };
     sc.addEventListener('wheel', this._wheel, { passive:false });
     const dots=this.railRef.current.querySelectorAll('[data-dot]');
     dots.forEach(btn=>btn.addEventListener('click',()=>{ this.goTo(+btn.dataset.dot); }));
@@ -266,10 +266,11 @@ class Component extends DCLogic {
   }
   goTo(i){
     i=Math.max(0,Math.min(6,i)); const sc=this.scrollerRef.current; if(!sc||!this._secs[i]) return;
-    const to=this._secs[i].offsetTop, from=sc.scrollTop; if(Math.abs(to-from)<2){ this.setActive(i); return; }
+    cancelAnimationFrame(this._scrollRaf);
+    const to=this._secs[i].offsetTop, from=sc.scrollTop; this.setActive(i); if(Math.abs(to-from)<2){ this._animating=false; return; }
     this._animating=true; const t0=performance.now(), dur=620; const ease=p=>p<0.5?4*p*p*p:1-Math.pow(-2*p+2,3)/2;
-    const step=(t)=>{ const p=Math.min(1,(t-t0)/dur); sc.scrollTop=from+(to-from)*ease(p); this._needDraw=true; if(p<1){ requestAnimationFrame(step); } else { this._animating=false; this.setActive(i); } };
-    requestAnimationFrame(step);
+    const step=(t)=>{ const p=Math.min(1,(t-t0)/dur); sc.scrollTop=from+(to-from)*ease(p); this._needDraw=true; if(p<1){ this._scrollRaf=requestAnimationFrame(step); } else { this._animating=false; } };
+    this._scrollRaf=requestAnimationFrame(step);
   }
   setActive(i){ if(this.active===i) return; this.active=i; const dots=this.railRef.current?this.railRef.current.querySelectorAll('[data-dot] .rp-dot'):[]; dots.forEach((d,di)=>d.classList.toggle('on',di===i)); }
   bindUI(){
