@@ -10,7 +10,7 @@
 <helmet>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;1,500&family=Manrope:wght@400;500;600;700&family=Montserrat:wght@500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;1,500&family=Manrope:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{ --rp-red:#e40f00; --rp-red-rgb:228,15,0; --rp-ink:#f6f7f8; }
   html,body{ margin:0; padding:0; height:100%; background:#000; }
@@ -18,7 +18,7 @@
   ::-webkit-scrollbar{ width:0; height:0; }
   .rp-dot{display:block;width:7px;height:7px;border-radius:99px;background:rgba(255,255,255,.28);transition:height .45s cubic-bezier(.2,.7,.2,1),background .45s,box-shadow .45s;}
   .rp-dot.on{height:26px;background:var(--rp-red);box-shadow:0 0 16px rgba(var(--rp-red-rgb),.75);}
-  .rp-field{width:100%;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.14);border-radius:12px;padding:11px 15px;color:#f6f7f8;font-family:'Montserrat',sans-serif;font-size:16px;font-weight:500;outline:none;transition:border-color .25s,background .25s,box-shadow .25s;}
+  .rp-field{width:100%;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.14);border-radius:12px;padding:11px 15px;color:#f6f7f8;font-family:'Manrope',sans-serif;font-size:16px;font-weight:500;outline:none;transition:border-color .25s,background .25s,box-shadow .25s;}
   .rp-field::placeholder{color:rgba(246,247,248,.4);font-weight:400;}
   .rp-field:focus{border-color:rgba(var(--rp-red-rgb),.85);background:rgba(255,255,255,.09);box-shadow:0 0 0 3px rgba(var(--rp-red-rgb),.18);}
   textarea.rp-field{resize:none;line-height:1.55;}
@@ -27,21 +27,21 @@
 </style>
 <script src="./redpebble-shared.js"></script>
 </helmet>
-<div ref="{{ rootRef }}" style="position:fixed; inset:0; background:#000; color:var(--rp-ink); font-family:'Montserrat',sans-serif; overflow:hidden; -webkit-font-smoothing:antialiased;">
+<div ref="{{ rootRef }}" style="position:fixed; inset:0; background:#000; color:var(--rp-ink); font-family:'Manrope',sans-serif; overflow:hidden; -webkit-font-smoothing:antialiased;">
 
   <canvas ref="{{ fxRef }}" style="position:absolute; inset:0; z-index:0; display:block; pointer-events:none;"></canvas>
 
   <div class="rp-rotate">
     <svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="var(--rp-red)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="2" width="10" height="20" rx="2.5"></rect><path d="M2 9 a6 6 0 0 1 6 -6" stroke="rgba(246,247,248,.45)"></path><polyline points="2 6 2 9 5 9" stroke="rgba(246,247,248,.45)"></polyline></svg>
-    <div style="font-family:'Montserrat',sans-serif; font-weight:600; font-size:20px; color:#fff;">Rotate to portrait</div>
-    <div style="font-family:'Montserrat',sans-serif; font-weight:500; font-size:14px; color:rgba(246,247,248,.7); max-width:300px; line-height:1.55;">RedPebble is crafted for portrait. Please turn your device upright.</div>
+    <div style="font-family:'Manrope',sans-serif; font-weight:600; font-size:20px; color:#fff;">Rotate to portrait</div>
+    <div style="font-family:'Manrope',sans-serif; font-weight:500; font-size:14px; color:rgba(246,247,248,.7); max-width:300px; line-height:1.55;">RedPebble is crafted for portrait. Please turn your device upright.</div>
   </div>
 
 
   <div ref="{{ barRef }}" style="position:absolute; top:0; left:0; right:0; z-index:30; display:flex; align-items:center; justify-content:flex-end; padding:15px 18px;">
     <div style="display:flex; align-items:center; gap:9px;">
-      <a ref="{{ skipRef }}" href="?view=desktop" title="Skip the Pebble \u2014 view the desktop experience" style="display:none; align-items:center; gap:7px; font-family:'Montserrat',sans-serif; font-weight:500; font-size:12.5px; letter-spacing:.02em; color:#fff; text-decoration:none; border:1px solid rgba(255,255,255,.28); background:rgba(255,255,255,.06); padding:9px 15px; border-radius:999px;">Skip the Pebble<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a>
-      <button ref="{{ navCtaRef }}" style="font-family:'Montserrat',sans-serif; font-weight:600; font-size:12.5px; letter-spacing:.03em; color:#fff; background:var(--rp-red); border:none; padding:9px 17px; border-radius:999px; cursor:pointer; box-shadow:0 6px 20px rgba(var(--rp-red-rgb),.4); transition:opacity .35s ease;">Talk to us</button>
+      <a ref="{{ skipRef }}" href="?view=desktop" title="Skip the Pebble \u2014 view the desktop experience" style="display:none; align-items:center; gap:7px; font-family:'Manrope',sans-serif; font-weight:500; font-size:12.5px; letter-spacing:.02em; color:#fff; text-decoration:none; border:1px solid rgba(255,255,255,.28); background:rgba(255,255,255,.06); padding:9px 15px; border-radius:999px;">Skip the Pebble<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a>
+      <button ref="{{ navCtaRef }}" style="font-family:'Manrope',sans-serif; font-weight:600; font-size:12.5px; letter-spacing:.03em; color:#fff; background:var(--rp-red); border:none; padding:9px 17px; border-radius:999px; cursor:pointer; box-shadow:0 6px 20px rgba(var(--rp-red-rgb),.4); transition:opacity .35s ease;">Talk to us</button>
     </div>
   </div>
 
@@ -64,13 +64,13 @@
           <div style="display:flex; align-items:center; gap:15px;">
             <img src="../assets/ashish.png" alt="Ashish Gupta" style="width:64px; height:64px; border-radius:999px; object-fit:cover; object-position:center 28%; border:2px solid rgba(255,255,255,.22); flex:0 0 auto;" />
             <div>
-              <div style="font-family:'Montserrat',sans-serif; font-weight:600; font-size:18px; color:#fff;">Ashish Gupta</div>
-              <div style="font-family:'Montserrat',sans-serif; font-weight:500; font-size:12.5px; color:rgba(246,247,248,.62); margin-top:3px;">Chief AI Rippler, <span style="color:var(--rp-red);">RedPebble.ai</span></div>
+              <div style="font-family:'Manrope',sans-serif; font-weight:600; font-size:18px; color:#fff;">Ashish Gupta</div>
+              <div style="font-family:'Manrope',sans-serif; font-weight:500; font-size:12.5px; color:rgba(246,247,248,.62); margin-top:3px;">Chief AI Rippler, <span style="color:var(--rp-red);">RedPebble.ai</span></div>
             </div>
             <a href="https://www.linkedin.com/in/ashishgupta97065/" target="_blank" rel="noopener" aria-label="Connect on LinkedIn" style="margin-left:auto; flex:0 0 auto; width:38px; height:38px; border-radius:999px; display:flex; align-items:center; justify-content:center; color:#f6f7f8; text-decoration:none; border:1px solid rgba(255,255,255,.2); background:rgba(255,255,255,.05);"><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.34V9h3.42v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.55V9h3.57v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.72V1.72C24 .77 23.2 0 22.22 0z"/></svg></a>
           </div>
-          <p style="font-family:'Montserrat',sans-serif; font-weight:500; font-size:14px; line-height:1.6; color:rgba(246,247,248,.74); margin:16px 0 0;">Post a 2-decade CTO stint across PolicyBazaar, Progcap, HealthKart &amp; Niva Bupa, I&rsquo;m now focused on helping organizations adopt AI in a meaningful way.</p>
-          <p style="font-family:'Montserrat',sans-serif; font-style:italic; font-weight:500; font-size:14px; line-height:1.6; color:var(--rp-red); margin:12px 0 0;">No theories, no fluff. Only Real Impact.</p>
+          <p style="font-family:'Manrope',sans-serif; font-weight:500; font-size:14px; line-height:1.6; color:rgba(246,247,248,.74); margin:16px 0 0;">Post a 2-decade CTO stint across PolicyBazaar, Progcap, HealthKart &amp; Niva Bupa, I&rsquo;m now focused on helping organizations adopt AI in a meaningful way.</p>
+          <p style="font-family:'Manrope',sans-serif; font-style:italic; font-weight:500; font-size:14px; line-height:1.6; color:var(--rp-red); margin:12px 0 0;">No theories, no fluff. Only Real Impact.</p>
 
           <form ref="{{ contactFormRef }}" style="margin-top:14px; display:flex; flex-direction:column; gap:9px;">
             <input class="rp-field" name="name" type="text" required placeholder="Your name" />
@@ -78,15 +78,15 @@
             <input class="rp-field" name="phone" type="tel" placeholder="Phone (optional)" />
             <input class="rp-field" name="company" type="text" placeholder="Company" />
             <textarea class="rp-field" name="comment" rows="2" placeholder="What would you like AI to take off your plate?"></textarea>
-            <button ref="{{ contactSubmitRef }}" type="submit" style="margin-top:4px; font-family:'Montserrat',sans-serif; font-weight:600; font-size:16px; border:none; cursor:pointer; padding:13px; border-radius:12px; background:var(--rp-red); color:#fff; box-shadow:0 12px 36px rgba(var(--rp-red-rgb),.42);">Send it &rarr;</button>
+            <button ref="{{ contactSubmitRef }}" type="submit" style="margin-top:4px; font-family:'Manrope',sans-serif; font-weight:600; font-size:16px; border:none; cursor:pointer; padding:13px; border-radius:12px; background:var(--rp-red); color:#fff; box-shadow:0 12px 36px rgba(var(--rp-red-rgb),.42);">Send it &rarr;</button>
           </form>
         </div>
 
         <div ref="{{ contactThanksRef }}" style="display:none; flex-direction:column; align-items:flex-start; justify-content:center; min-height:60vh;">
           <div style="width:60px; height:60px; border-radius:999px; background:rgba(var(--rp-red-rgb),.16); border:1px solid rgba(var(--rp-red-rgb),.5); display:flex; align-items:center; justify-content:center; color:#ff5b4d; font-size:28px;">&#10003;</div>
-          <div style="font-family:'Montserrat',sans-serif; font-weight:500; font-size:38px; color:#fff; margin-top:22px;">Thank you.</div>
-          <p style="font-family:'Montserrat',sans-serif; font-weight:500; font-size:15px; line-height:1.6; color:rgba(246,247,248,.78); margin:14px 0 0;">Your note is on its way to Ashish. We&rsquo;ll be in touch shortly &mdash; the first ripple is already moving.</p>
-          <button ref="{{ contactResetRef }}" type="button" style="margin-top:28px; font-family:'Montserrat',sans-serif; font-weight:600; font-size:13px; cursor:pointer; padding:12px 22px; border-radius:999px; border:1px solid rgba(255,255,255,.22); background:rgba(255,255,255,.05); color:#f6f7f8;">Back to the ripples</button>
+          <div style="font-family:'Manrope',sans-serif; font-weight:500; font-size:38px; color:#fff; margin-top:22px;">Thank you.</div>
+          <p style="font-family:'Manrope',sans-serif; font-weight:500; font-size:15px; line-height:1.6; color:rgba(246,247,248,.78); margin:14px 0 0;">Your note is on its way to Ashish. We&rsquo;ll be in touch shortly &mdash; the first ripple is already moving.</p>
+          <button ref="{{ contactResetRef }}" type="button" style="margin-top:28px; font-family:'Manrope',sans-serif; font-weight:600; font-size:13px; cursor:pointer; padding:12px 22px; border-radius:999px; border:1px solid rgba(255,255,255,.22); background:rgba(255,255,255,.05); color:#f6f7f8;">Back to the ripples</button>
         </div>
       </div>
     </section>
@@ -127,7 +127,7 @@ class Component extends DCLogic {
     this.bindUI();
     this.bindReveal();
     this._loop=(t)=>this.loop(t); this.raf=requestAnimationFrame(this._loop);
-    if(document.fonts && document.fonts.ready){ document.fonts.ready.then(()=>{ this._needDraw=true; }); }
+    if(document.fonts && document.fonts.load){ Promise.all([document.fonts.load('600 40px "Space Grotesk"'),document.fonts.load('700 40px "Space Grotesk"'),document.fonts.load('500 16px "Manrope"')]).then(()=>{ this._needDraw=true; }).catch(()=>{}); document.fonts.ready.then(()=>{ this._needDraw=true; }); }
   }
   componentWillUnmount(){
     cancelAnimationFrame(this.raf);
@@ -201,34 +201,34 @@ class Component extends DCLogic {
     const ctx=this.cctx, w=this.cw, cx=w/2, maxW=w-50, band=yc+32;
     if(k===0){
       const ts=Math.min(w*0.108,46), lh=ts*1.06;
-      ctx.font='600 '+ts+'px Montserrat,sans-serif';
+      ctx.font='600 '+ts+'px "Space Grotesk",sans-serif';
       const l1=this._lines(ctx,'Creating AI Ripples That',maxW), l2=this._lines(ctx,'Transform Your Organization',maxW);
-      ctx.font='500 16.5px Montserrat,sans-serif'; const bl=this._lines(ctx,'RedPebble drops AI into every part of your business, creating a tsunami of transformation.',Math.min(330,maxW));
+      ctx.font='500 16.5px Manrope,sans-serif'; const bl=this._lines(ctx,'RedPebble drops AI into every part of your business, creating a tsunami of transformation.',Math.min(330,maxW));
       const H=(l1.length+l2.length)*lh + 28 + bl.length*24;
       let y=band - H/2 + ts;
-      ctx.font='600 '+ts+'px Montserrat,sans-serif';
+      ctx.font='600 '+ts+'px "Space Grotesk",sans-serif';
       ctx.fillStyle='#f6f7f8'; for(const ln of l1){ ctx.fillText(ln,cx,y); y+=lh; }
       ctx.fillStyle='#e40f00'; for(const ln of l2){ ctx.fillText(ln,cx,y); y+=lh; }
-      y+=22; ctx.fillStyle='rgba(246,247,248,.8)'; ctx.font='500 16.5px Montserrat,sans-serif'; for(const ln of bl){ ctx.fillText(ln,cx,y); y+=24; }
+      y+=22; ctx.fillStyle='rgba(246,247,248,.8)'; ctx.font='500 16.5px Manrope,sans-serif'; for(const ln of bl){ ctx.fillText(ln,cx,y); y+=24; }
     } else if(k>=1 && k<=5){
       const hp=this.hops[k-1];
       const ts=Math.min(w*0.096,50), tlh=ts*1.06;
-      ctx.font='600 '+ts+'px Montserrat,sans-serif';
+      ctx.font='600 '+ts+'px "Space Grotesk",sans-serif';
       const tl1=this._lines(ctx,hp.t1,maxW), tl2=this._lines(ctx,hp.t2,maxW);
-      let subLines=null; if(hp.sub){ ctx.font='500 16.5px Montserrat,sans-serif'; subLines=this._lines(ctx,hp.sub,Math.min(330,maxW)); }
+      let subLines=null; if(hp.sub){ ctx.font='500 16.5px Manrope,sans-serif'; subLines=this._lines(ctx,hp.sub,Math.min(330,maxW)); }
       let H=(tl1.length+tl2.length)*tlh + 40;
       if(subLines) H+=subLines.length*24;
       if(hp.bullets) H+=hp.bullets.length*27;
       if(hp.tail) H+=38+22;
-      ctx.save(); ctx.font='700 '+Math.min(this.ch*0.42,340)+'px Montserrat,sans-serif'; ctx.textBaseline='middle'; ctx.lineWidth=2; ctx.strokeStyle='rgba(228,15,0,.12)'; ctx.strokeText(hp.num, cx, band); ctx.restore(); ctx.textBaseline='alphabetic';
+      ctx.save(); ctx.font='700 '+Math.min(this.ch*0.42,340)+'px "Space Grotesk",sans-serif'; ctx.textBaseline='middle'; ctx.lineWidth=2; ctx.strokeStyle='rgba(228,15,0,.12)'; ctx.strokeText(hp.num, cx, band); ctx.restore(); ctx.textBaseline='alphabetic';
       let y=band - H/2 + ts;
-      ctx.font='600 '+ts+'px Montserrat,sans-serif';
+      ctx.font='600 '+ts+'px "Space Grotesk",sans-serif';
       ctx.fillStyle='#f6f7f8'; for(const ln of tl1){ ctx.fillText(ln,cx,y); y+=tlh; }
       ctx.fillStyle='#e40f00'; for(const ln of tl2){ ctx.fillText(ln,cx,y); y+=tlh; }
       y+=14; ctx.fillStyle='#e40f00'; ctx.fillRect(cx-22,y,44,2); y+=24;
-      if(subLines){ ctx.fillStyle='rgba(246,247,248,.8)'; ctx.font='500 16.5px Montserrat,sans-serif'; for(const ln of subLines){ ctx.fillText(ln,cx,y); y+=24; } }
-      if(hp.bullets){ ctx.font='500 16.5px Montserrat,sans-serif'; ctx.textAlign='left'; let mbw=0; for(const b of hp.bullets) mbw=Math.max(mbw,ctx.measureText(b).width); const bx=cx-(mbw/2)+8; for(const b of hp.bullets){ y+=27; ctx.fillStyle='#e40f00'; ctx.beginPath(); ctx.arc(bx-15,y-5,3.5,0,6.2832); ctx.fill(); ctx.fillStyle='rgba(246,247,248,.8)'; ctx.fillText(b,bx,y); } ctx.textAlign='center'; }
-      if(hp.tail){ y+=38; ctx.fillStyle='#ff5b4d'; ctx.font='500 italic 21px Montserrat,sans-serif'; ctx.fillText(hp.tail,cx,y); }
+      if(subLines){ ctx.fillStyle='rgba(246,247,248,.8)'; ctx.font='500 16.5px Manrope,sans-serif'; for(const ln of subLines){ ctx.fillText(ln,cx,y); y+=24; } }
+      if(hp.bullets){ ctx.font='500 16.5px Manrope,sans-serif'; ctx.textAlign='left'; let mbw=0; for(const b of hp.bullets) mbw=Math.max(mbw,ctx.measureText(b).width); const bx=cx-(mbw/2)+8; for(const b of hp.bullets){ y+=27; ctx.fillStyle='#e40f00'; ctx.beginPath(); ctx.arc(bx-15,y-5,3.5,0,6.2832); ctx.fill(); ctx.fillStyle='rgba(246,247,248,.8)'; ctx.fillText(b,bx,y); } ctx.textAlign='center'; }
+      if(hp.tail){ y+=38; ctx.fillStyle='#ff5b4d'; ctx.font='500 italic 21px Manrope,sans-serif'; ctx.fillText(hp.tail,cx,y); }
     }
   }
   randPos(){ const c=this.P.ignoreCenter; let x,y,tries=0; do{ x=0.08+Math.random()*0.84; y=0.14+Math.random()*0.72; tries++; } while(tries<16 && Math.abs(x-0.5)<c*0.5 && Math.abs(y-0.5)<c*0.5); return {x,y}; }
