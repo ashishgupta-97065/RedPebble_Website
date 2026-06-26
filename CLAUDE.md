@@ -1,71 +1,67 @@
 # RedPebble Website
 
-Marketing / landing site for **RedPebble** (an AI advisory practice), live at
-**https://redpebble.ai**.
+Marketing site for **RedPebble** (an AI advisory practice), live at **https://redpebble.ai**.
+Static only — HTML, CSS, client-side JS, WebGL. No backend, no build framework.
 
-## What this project is
+## Deployment (live setup — reuse, don't recreate)
 
-- A **static website** — HTML, CSS, client-side JS, and WebGL only.
-- **No server-side code, no backend, no build framework.** It is served as plain
-  static assets. Keep it that way unless explicitly asked to add tooling.
-- Currently a single "coming soon" landing page; it will grow into a fuller site
-  over time (still static).
+### GitHub
+- Repo: https://github.com/ashishgupta-97065/RedPebble_Website
+- Default & production branch: `main`. Pushing to `main` is the deploy trigger.
 
-## Repository layout
+### Hosting — Cloudflare Workers (static assets)  [NOT Vercel/Pages]
+- Connected to the GitHub repo via Cloudflare "Workers Builds" (Git integration).
+- Every push to `main` → Cloudflare runs `npx wrangler deploy` → live in ~30s. No manual step.
+- Worker/project: `redpebble-website` · Worker URL: https://redpebble-website.ashishgupta97065.workers.dev
+- Cloudflare account: ashishgupta97065@gmail.com
+- Config: `wrangler.jsonc` at repo root serves `./public`:
+      { "name": "redpebble-website", "compatibility_date": "2024-11-01",
+        "assets": { "directory": "./public" } }
+- Note: Cloudflare's default `html_handling` 307-redirects `*.html` to the extension-less
+  path; the DC runtime's `fetch()` follows redirects, so `*.dc.html` views still load fine.
 
-```
-.
-├── public/            # everything served to the browser lives here
-│   └── index.html     # the landing page (currently the whole site)
-├── wrangler.jsonc     # Cloudflare config: serve ./public as static assets
-└── CLAUDE.md          # this file
-```
+### Domains (Cloudflare-registered, same account)
+- redpebble.ai (apex) — canonical, Custom Domain on the Worker.
+- www.redpebble.ai → 301 → https://redpebble.ai (proxied CNAME `www` + "WWW to root" Redirect Rule).
 
-- **All site files go in `public/`** — HTML, CSS, JS, images, WebGL assets, etc.
-- Reference assets with **relative paths** (e.g. `./styles.css`, `./js/app.js`,
-  `./assets/model.glb`) so they resolve correctly when served.
-- Do **not** move files out of `public/` or rename it — `wrangler.jsonc` points
-  the asset directory at `./public`.
+## What gets served — `public/` (the DEPLOYED, flattened build)
 
-## Hosting & deployment
-
-- Hosted on **Cloudflare Workers (static assets)**, connected to this GitHub repo
-  via Cloudflare's Git integration ("Workers Builds").
-- **Deploys automatically on every push to `main`.** Push to `main` → Cloudflare
-  runs `npx wrangler deploy` → site is live in ~30 seconds. No manual deploy step.
-- `main` is the default branch and the production branch.
-- The Cloudflare project is named `redpebble-website`. The default Worker URL is
-  `redpebble-website.ashishgupta97065.workers.dev` (the real site is the custom
-  domain below).
-
-## Domains
-
-- **`redpebble.ai`** (apex) — serves the site. This is the canonical URL.
-- **`www.redpebble.ai`** — 301-redirects to `https://redpebble.ai` (handled by a
-  Cloudflare Redirect Rule + a proxied `www` CNAME). Do not change this without
-  asking; the apex is canonical.
-
-## How to make changes
-
-1. Edit / add files inside `public/`.
-2. For small tweaks, committing to `main` is fine (it auto-deploys).
-   For larger changes, work on a feature branch and open a PR into `main`.
-3. After pushing to `main`, the live site updates automatically.
-
-## Local preview
-
-It's a static site, so you can just open `public/index.html` in a browser.
-To preview exactly as Cloudflare serves it (with the assets routing):
+The site is a "Design Component" (DC) app. The DC runtime (`support.js`) fetches sibling
+`*.dc.html` views **by name from the same directory** (`COMPONENT_DIR = "."`). So everything
+the entry needs sits flat in `public/`, with shared `assets/` at the root:
 
 ```
-npx wrangler dev
+public/
+  index.html                  # the ROUTER (entry). Detects device:
+                              #   ?view=mobile / ?view=desktop override, else MOBILE by default.
+  RedPebble Mobile.dc.html    # black liquid-ripple WebGL site (default for all devices)
+  RedPebble Desktop.dc.html   # boy-skips-stone WebGL scene (opt-in via "Skip the Pebble" → ?view=desktop)
+  redpebble-shared.js         # shared logic: sendContact() etc. (CONTACT_EMAIL = ag@redpebble.ai)
+  support.js                  # DC runtime (never hand-edit)
+  assets/...                  # shared images / 3D models; views reference them as ../assets/...
 ```
+
+- Views reference `./support.js`, `./redpebble-shared.js` (siblings) and `../assets/...`.
+  Served at the site root, `../assets/` resolves to `/assets/` (URL root-clamping) — works.
+- Runtime deps load from CDNs at view time (React→unpkg, three.js→cdnjs/jsdelivr, Google Fonts).
+  Real browsers fetch these fine; a sandboxed/headless browser may be blocked from them.
+
+## Source vs. deploy
+
+Sources are authored externally (a design tool) and delivered as a zip with this layout:
+`code/` (the working folder: `RedPebble Site.dc.html` = entry, the two views, the two .js)
+and a shared `code/../assets/`, plus `archive/` (version history — **gitignored, not deployed**).
+
+To deploy a new zip:
+1. Flatten `code/` into `public/`: `RedPebble Site.dc.html` → `public/index.html`; copy the two
+   `*.dc.html` views + `redpebble-shared.js` + `support.js` as-is (keep exact names); copy
+   `assets/` → `public/assets/`.
+2. Do NOT deploy `archive/` (kept in `.gitignore`).
+3. Commit & push to `main`; Cloudflare auto-rebuilds. Verify at https://redpebble.ai.
 
 ## Conventions
 
-- Keep it dependency-light and static. Prefer vanilla HTML/CSS/JS and inline or
-  relative-linked assets over adding bundlers/frameworks unless asked.
-- Match the existing visual style (dark background `#0a0c0f`, the single red
-  "pebble" accent `#e02b1d`, Fraunces serif for headings, IBM Plex Mono for
-  small/eyebrow text). See `public/index.html` for the established palette and
-  type choices.
+- Static & dependency-light. Edit shared cross-platform logic in `redpebble-shared.js`, not per-view.
+- Contact: form posts via FormSubmit AJAX to `ag@redpebble.ai` (mailto fallback). FormSubmit needs
+  a one-time activation — the first real submission emails a confirmation link to that inbox.
+- Palette: black bg, single red accent `#e40f00`; fonts Montserrat (mobile) / Manrope + Cormorant.
