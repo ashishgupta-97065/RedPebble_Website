@@ -267,7 +267,7 @@ class Component extends DCLogic {
   goTo(i){
     i=Math.max(0,Math.min(6,i)); const sc=this.scrollerRef.current; if(!sc||!this._secs[i]) return;
     const to=this._secs[i].offsetTop, from=sc.scrollTop; if(Math.abs(to-from)<2){ this.setActive(i); return; }
-    this._animating=true; const t0=performance.now(), dur=2400; const ease=p=>p<0.5?4*p*p*p:1-Math.pow(-2*p+2,3)/2;
+    this._animating=true; const t0=performance.now(), dur=620; const ease=p=>p<0.5?4*p*p*p:1-Math.pow(-2*p+2,3)/2;
     const step=(t)=>{ const p=Math.min(1,(t-t0)/dur); sc.scrollTop=from+(to-from)*ease(p); this._needDraw=true; if(p<1){ requestAnimationFrame(step); } else { this._animating=false; this.setActive(i); } };
     requestAnimationFrame(step);
   }
