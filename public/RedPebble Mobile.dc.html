@@ -258,7 +258,7 @@ class Component extends DCLogic {
   bindReveal(){
     const sc=this.scrollerRef.current; this._secs=[...sc.querySelectorAll('.rp-sec')];
     sc.addEventListener('scroll',()=>{ this._needDraw=true; const f=sc.scrollTop/Math.max(1,this.ch); if(this.logoRef.current) this.logoRef.current.style.opacity=(f>5.3?'0':'1'); { const onForm=f>5.3; if(this.navCtaRef.current){ this.navCtaRef.current.style.opacity=onForm?'0':'1'; this.navCtaRef.current.style.pointerEvents=onForm?'none':'auto'; } } if(!this._animating){ this.setActive(Math.max(0,Math.min(6,Math.round(f)))); } });
-    this._wheel=(ev)=>{ if(this.active===6) return; ev.preventDefault(); if(this._animating) return; this.goTo(this.active + (ev.deltaY>0?1:-1)); };
+    this._wheel=(ev)=>{ if(this.active===6) return; ev.preventDefault(); clearTimeout(this._wheelEnd); this._wheelEnd=setTimeout(()=>{ this._wheelLock=false; },180); if(this._animating || this._wheelLock) return; this._wheelLock=true; this.goTo(this.active + (ev.deltaY>0?1:-1)); };
     sc.addEventListener('wheel', this._wheel, { passive:false });
     const dots=this.railRef.current.querySelectorAll('[data-dot]');
     dots.forEach(btn=>btn.addEventListener('click',()=>{ this.goTo(+btn.dataset.dot); }));
