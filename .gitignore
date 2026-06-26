@@ -4,3 +4,4 @@ archive/
 __MACOSX/
 .thumbnail
 node_modules/
+.gstack/
