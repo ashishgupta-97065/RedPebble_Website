@@ -5,3 +5,4 @@ __MACOSX/
 .thumbnail
 node_modules/
 .gstack/
+.wrangler/
