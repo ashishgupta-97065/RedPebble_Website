@@ -155,7 +155,7 @@ class Component extends DCLogic {
     this.quad=gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER,this.quad); gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1,1,-1,-1,1,1,1]),gl.STATIC_DRAW);
     this.contentCanvas=document.createElement('canvas'); this.cctx=this.contentCanvas.getContext('2d');
     this.contentTex=gl.createTexture();
-    this._logoImg=new Image(); this._logoImg.onload=()=>{ this._needDraw=true; }; this._logoImg.src='../assets/redpebble-logo-white.png';
+    this._logoImg=new Image(); this._logoImg.onload=()=>{ this._needDraw=true; }; this._logoImg.src='../assets/redpebble-pebble.png';
     this._rz=()=>this.resizeGL(); window.addEventListener('resize',this._rz); this.resizeGL();
   }
   _sh(src,t){ const gl=this.gl; const s=gl.createShader(t); gl.shaderSource(s,src); gl.compileShader(s); return s; }
