@@ -8,6 +8,20 @@
 (function (root) {
   var CONTACT_EMAIL = 'ag@redpebble.ai';
 
+  // Lightweight, backend-free event counter. Pings a sentinel same-origin path
+  // on a successful contact submit. The request is logged by Cloudflare's HTTP
+  // traffic analytics (the dashboard you already have) — filter Path equals
+  // "/__event/contact-submit" and the request count = number of form fills.
+  // The path is a static 404 (no route exists); that's intentional and still
+  // counted. Uses sendBeacon so it survives the mailto navigation fallback.
+  function track(name) {
+    try {
+      var url = '/__event/' + name;
+      if (navigator && navigator.sendBeacon) { navigator.sendBeacon(url); }
+      else { fetch(url, { method: 'POST', keepalive: true, mode: 'no-cors' }); }
+    } catch (e) { /* analytics must never break submit */ }
+  }
+
   var FOUNDER = {
     name: 'Ashish Gupta',
     role: 'Founder, RedPebble.ai',
@@ -31,6 +45,7 @@
         return r.json();
       })
       .then(function () {
+        track('contact-submit');
         return { ok: true, method: 'ajax' };
       })
       .catch(function () {
@@ -42,11 +57,12 @@
           '\nCompany: ' + ((data && data.company) || '') +
           '\n\n' + ((data && data.comment) || '')
         );
+        track('contact-submit');
         window.location.href = 'mailto:' + CONTACT_EMAIL +
           '?subject=' + encodeURIComponent(payload._subject) + '&body=' + body;
         return { ok: true, method: 'mailto' };
       });
   }
 
-  root.RedPebbleShared = { CONTACT_EMAIL: CONTACT_EMAIL, FOUNDER: FOUNDER, sendContact: sendContact };
+  root.RedPebbleShared = { CONTACT_EMAIL: CONTACT_EMAIL, FOUNDER: FOUNDER, sendContact: sendContact, track: track };
 })(window);

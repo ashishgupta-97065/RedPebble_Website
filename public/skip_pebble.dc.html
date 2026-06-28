@@ -10,7 +10,7 @@
 <helmet>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Manrope:wght@400;500;600;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Manrope:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   html, body { margin: 0; padding: 0; height: 100%; overflow: hidden; background: #05080d; }
   * { box-sizing: border-box; }
@@ -42,7 +42,7 @@
       radial-gradient(ellipse 40% 46% at 62% 52%, rgba(255,255,255,.5) 0%, rgba(255,255,255,.42) 54%, rgba(255,255,255,0) 74%),
       radial-gradient(ellipse 30% 40% at 80% 64%, rgba(255,255,255,.46) 0%, rgba(255,255,255,.4) 50%, rgba(255,255,255,0) 72%),
       radial-gradient(ellipse 60% 30% at 50% 72%, rgba(255,255,255,.48) 0%, rgba(255,255,255,.36) 50%, rgba(255,255,255,0) 80%);"></div>
-    <img src="../assets/redpebble-logo-white.png" alt="RedPebble.ai" style="position:relative; display:block; height:84px; width:auto; z-index:1; filter:drop-shadow(0 2px 10px rgba(0,0,0,.35));" />
+    <img src="assets/redpebble-logo-white.png" alt="RedPebble.ai" style="position:relative; display:block; height:84px; width:auto; z-index:1; filter:drop-shadow(0 2px 10px rgba(0,0,0,.35));" />
   </div>
 
   <div style="position:absolute; top:25px; right:36px; z-index:6; display:flex; align-items:center; gap:11px;">
@@ -53,8 +53,8 @@
   </div>
 
   <div ref="{{ introRef }}" style="position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:flex-start; text-align:center; z-index:5; transition:opacity 1s ease; pointer-events:none; text-shadow:0 2px 40px rgba(0,0,0,.5); padding-top:calc(7vh + 100px);">
-    <div ref="{{ introTitleRef }}" style="font-family:'Montserrat',sans-serif; font-weight:600; font-size:clamp(34px,5.6vw,82px); line-height:.95; letter-spacing:-.012em; white-space:nowrap;"></div>
-    <div ref="{{ introSubRef }}" style="font-family:'Montserrat',sans-serif; font-weight:500; letter-spacing:.26em; text-transform:uppercase; font-size:clamp(11px,1.2vw,15px); margin-top:14px; opacity:0; text-shadow:0 1px 6px rgba(0,0,0,.5); transition:opacity 1.1s ease .5s;">Click anywhere to unleash the <span style="color:#e40f00; text-shadow:0 1px 3px rgba(0,0,0,.28);">RedPebble</span></div>
+    <div ref="{{ introTitleRef }}" style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:clamp(34px,5.6vw,82px); line-height:.95; letter-spacing:-.012em; white-space:nowrap;"></div>
+    <div ref="{{ introSubRef }}" style="font-family:'Manrope',sans-serif; font-weight:500; letter-spacing:.26em; text-transform:uppercase; font-size:clamp(11px,1.2vw,15px); margin-top:14px; opacity:0; text-shadow:0 1px 3px rgba(0,0,0,.92),0 0 10px rgba(0,0,0,.55); transition:opacity 1.1s ease .5s;">Click anywhere to unleash the <span style="color:#ff5b4d; text-shadow:0 1px 3px rgba(0,0,0,.7);">RedPebble</span></div>
   </div>
 
   <div ref="{{ pitchRef }}" style="position:absolute; top:23%; left:50%; transform:translateX(-50%); width:min(1180px,90vw); text-align:center; z-index:5; pointer-events:none; text-shadow:0 2px 44px rgba(0,0,0,.55);">
@@ -83,9 +83,9 @@
 
       <!-- profile -->
       <div style="padding:46px 40px; background:rgba(255,255,255,.05); border-right:1px solid rgba(255,255,255,.1); display:flex; flex-direction:column;">
-        <img src="../assets/ashish.png" alt="Ashish Gupta" style="width:104px; height:104px; border-radius:999px; object-fit:cover; object-position:center 28%; border:2px solid rgba(255,255,255,.28); box-shadow:0 12px 34px rgba(0,0,0,.4);" />
-        <div style="font-family:'Montserrat',sans-serif; font-weight:600; font-size:23px; letter-spacing:-.01em; margin-top:24px;">Ashish Gupta</div>
-        <div style="font-family:'Manrope',sans-serif; font-weight:500; font-size:13px; letter-spacing:.04em; opacity:.66; margin-top:6px;">Founder, <span style="color:#ff5b4d;">RedPebble.ai</span></div>
+        <img src="assets/ashish.png" alt="Ashish Gupta" style="width:104px; height:104px; border-radius:999px; object-fit:cover; object-position:center 28%; border:2px solid rgba(255,255,255,.28); box-shadow:0 12px 34px rgba(0,0,0,.4);" />
+        <div style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:23px; letter-spacing:-.01em; margin-top:24px;">Ashish Gupta</div>
+        <div style="font-family:'Manrope',sans-serif; font-weight:500; font-size:13px; letter-spacing:.04em; opacity:.66; margin-top:6px;">Chief AI Rippler, <span style="color:#ff5b4d;">RedPebble.ai</span></div>
         <p style="font-family:'Manrope',sans-serif; font-weight:400; font-size:14.5px; line-height:1.62; opacity:.84; margin:22px 0 0;">Post a 2-decade CTO stint across large startups like PolicyBazaar, Progcap, HealthKart &amp; Niva Bupa, I am now focussed on helping organizations adopt AI in a meaningful way.</p>
         <p style="font-family:'Manrope',sans-serif; font-weight:400; font-size:14.5px; line-height:1.62; opacity:.84; margin:14px 0 0;">No theories, no fluff &mdash; achieve real-world KPIs and transform your organization with AI that adapts to you.</p>
         <a href="https://www.linkedin.com/in/ashishgupta97065/" target="_blank" rel="noopener" style="margin-top:auto; display:inline-flex; align-items:center; gap:9px; align-self:flex-start; font-family:'Manrope',sans-serif; font-weight:600; font-size:13px; letter-spacing:.02em; text-decoration:none; color:#f6fbff; padding:11px 18px; border-radius:999px; border:1px solid rgba(255,255,255,.24); background:rgba(255,255,255,.06); transition:background .25s ease;" style-hover="background:rgba(255,255,255,.16);">
@@ -450,7 +450,7 @@ void main(){
   showBeatContent(beat){ this.hideContent();
     if(beat===0){ this.splitWords(this.introTitleRef.current,'Start Your AI Journey'); this.revealWords(this.introTitleRef.current);
       if(this.introRef.current) this.introRef.current.style.opacity='1';
-      if(this.introSubRef.current) requestAnimationFrame(()=>{ this.introSubRef.current.style.opacity='.6'; });
+      if(this.introSubRef.current) requestAnimationFrame(()=>{ this.introSubRef.current.style.opacity='.92'; });
       if(this.hintRef.current) this.hintRef.current.style.opacity='.6';
     } else if(beat>=1 && beat<=5){ const h=this.HOPS[beat-1];
       this.spawnPitchSplash(beat);
@@ -652,7 +652,7 @@ void main(){
     const treeIds=[5,6,7,8,9,10,11,12,13,14,15,16,17,18,37,38,39,40,41,42,43,44,45,46,47,48,49];
     const stumpIds=[23,24,25];
     this.foliageTrees=[]; this.foliageStumps=[];
-    const load=(id,arr)=>{ const img=new Image(); img.onload=()=>{img._ready=true;}; img.src='../assets/kenney/foliage/'+String(id).padStart(3,'0')+'.png'; arr.push(img); };
+    const load=(id,arr)=>{ const img=new Image(); img.onload=()=>{img._ready=true;}; img.src='assets/kenney/foliage/'+String(id).padStart(3,'0')+'.png'; arr.push(img); };
     treeIds.forEach(id=>load(id,this.foliageTrees));
     stumpIds.forEach(id=>load(id,this.foliageStumps));
   }
@@ -831,28 +831,28 @@ void main(){
   initProps3D(){
     // world X relative to boy at 220; camX starts at 220, sx(wx)=wx-camX+W*0.34
     this.PROPS=[
-      {key:'chest', url:'../assets/kenney/pirate/chest.glb',             worldX:-35,  base:'foot',  px:108, rotY:0.6,  yoff:0, gy:0.65},
+      {key:'chest', url:'assets/kenney/pirate/chest.glb',             worldX:-35,  base:'foot',  px:108, rotY:0.6,  yoff:0, gy:0.65},
       {key:'picnic', base:'foot', worldX:100, gy:0.65, px:118, rotY:0.45, yoff:0, multi:[
-        {url:'../assets/kenney/food/cutting-board-round.glb'},
-        {url:'../assets/kenney/food/burger.glb',          s:0.58, x:-0.34, z:0.12,  ry:0.4},
-        {url:'../assets/kenney/food/carrot.glb',          s:0.66, x:0.30,  z:0.30,  ry:0.7},
-        {url:'../assets/kenney/food/donut-sprinkles.glb', s:0.44, x:0.36,  z:-0.18, ry:0},
-        {url:'../assets/kenney/food/cherries.glb',        s:0.40, x:-0.06, z:-0.32, ry:-0.3}
+        {url:'assets/kenney/food/cutting-board-round.glb'},
+        {url:'assets/kenney/food/burger.glb',          s:0.58, x:-0.34, z:0.12,  ry:0.4},
+        {url:'assets/kenney/food/carrot.glb',          s:0.66, x:0.30,  z:0.30,  ry:0.7},
+        {url:'assets/kenney/food/donut-sprinkles.glb', s:0.44, x:0.36,  z:-0.18, ry:0},
+        {url:'assets/kenney/food/cherries.glb',        s:0.40, x:-0.06, z:-0.32, ry:-0.3}
       ]},
-      {key:'boat',  url:'../assets/kenney/watercraft/boat-row-small.glb',worldX:560,  base:'water', px:90,  rotY:1.4,  yoff:26, bob:1, phase:0.0, bobAmp:5, rockAmp:0.055, bobSpd:0.0016},
-      {key:'boat2', url:'../assets/kenney/watercraft/boat-row-large.glb',worldX:2280, base:'water', px:130, rotY:-1.05,yoff:32, bob:1, phase:2.3, bobAmp:6, rockAmp:0.045, bobSpd:0.0014},
-      {key:'boat3', url:'../assets/kenney/watercraft/boat-row-small.glb',worldX:3360, base:'water', px:82,  rotY:1.7,  yoff:24, bob:1, phase:4.1, bobAmp:5, rockAmp:0.055, bobSpd:0.0018},
-      {key:'tree',  url:'../assets/kenney/foliage-tree.png',             worldX:780,  base:'far', px:80, is2d:true, yoff:0},
+      {key:'boat',  url:'assets/kenney/watercraft/boat-row-small.glb',worldX:560,  base:'water', px:90,  rotY:1.4,  yoff:26, bob:1, phase:0.0, bobAmp:5, rockAmp:0.055, bobSpd:0.0016},
+      {key:'boat2', url:'assets/kenney/watercraft/boat-row-large.glb',worldX:2280, base:'water', px:130, rotY:-1.05,yoff:32, bob:1, phase:2.3, bobAmp:6, rockAmp:0.045, bobSpd:0.0014},
+      {key:'boat3', url:'assets/kenney/watercraft/boat-row-small.glb',worldX:3360, base:'water', px:82,  rotY:1.7,  yoff:24, bob:1, phase:4.1, bobAmp:5, rockAmp:0.055, bobSpd:0.0018},
+      {key:'tree',  url:'assets/kenney/foliage-tree.png',             worldX:780,  base:'far', px:80, is2d:true, yoff:0},
       // --- bank dressing: logs along the boy's embankment ---
-      {key:'logFront',  url:'../assets/kenney/survival/tree-log.glb',         worldX:-130, gy:0.92, base:'foot', px:128, rotY:0.32},
-      {key:'logSmall',  url:'../assets/kenney/survival/tree-log-small.glb',   worldX:355,  gy:0.88, base:'foot', px:80,  rotY:1.15}
+      {key:'logFront',  url:'assets/kenney/survival/tree-log.glb',         worldX:-130, gy:0.92, base:'foot', px:128, rotY:0.32},
+      {key:'logSmall',  url:'assets/kenney/survival/tree-log-small.glb',   worldX:355,  gy:0.88, base:'foot', px:80,  rotY:1.15}
     ];
     // --- procedural bank scatter along the whole skip path (camera pans 120 -> ~4220) ---
     (()=>{
       let s=20.17; const rnd=()=>{ const x=Math.sin(s++)*43758.5453; return x-Math.floor(x); };
       const big=[
-        {u:'../assets/kenney/survival/tree-log.glb',      px:[110,140], ry:[-0.6,0.7]},
-        {u:'../assets/kenney/survival/tree-log-small.glb', px:[68,96],  ry:[-3.14,3.14]}
+        {u:'assets/kenney/survival/tree-log.glb',      px:[110,140], ry:[-0.6,0.7]},
+        {u:'assets/kenney/survival/tree-log-small.glb', px:[68,96],  ry:[-3.14,3.14]}
       ];
       let n=0, i=0;
       for(let wx=470; wx<4500; wx += 450+rnd()*630){
@@ -996,10 +996,10 @@ void main(){
     const sun=new THREE.DirectionalLight(0xfff2cc,1.5); sun.position.set(150,190,90); scene.add(sun);
     scene.add(new THREE.AmbientLight(0xffffff,0.18));
     this.boyScene=scene; this.boyCam=cam;
-    const tex=new THREE.TextureLoader().load('../assets/kenney/skaterMaleA.png',(t)=>{t.flipY=true;t.encoding=THREE.sRGBEncoding;t.needsUpdate=true;});
+    const tex=new THREE.TextureLoader().load('assets/kenney/skaterMaleA.png',(t)=>{t.flipY=true;t.encoding=THREE.sRGBEncoding;t.needsUpdate=true;});
     tex.flipY=true; tex.encoding=THREE.sRGBEncoding;
     const loader=new THREE.FBXLoader();
-    loader.load('../assets/kenney/characterMedium.fbx',(obj)=>{
+    loader.load('assets/kenney/characterMedium.fbx',(obj)=>{
       const B={};
       obj.traverse(c=>{ if(c.isMesh){ c.material=new THREE.MeshStandardMaterial({map:tex,roughness:0.85,metalness:0.0}); c.material.skinning=true; c.material.needsUpdate=true; } if(c.isBone) B[c.name]=c; });
       const box=new THREE.Box3().setFromObject(obj); const sz=new THREE.Vector3(); box.getSize(sz);
@@ -1218,9 +1218,9 @@ void main(){
     let scale=1, L;
     for(let pass=0; pass<10; pass++){
       const fsM=b.fs||1; const ps=Math.max(10,R*0.162*scale*fsM), ss=Math.max(8,R*0.126*scale*fsM);
-      ctx.font='600 '+ps+'px Montserrat,sans-serif';
+      ctx.font='600 '+ps+'px "Space Grotesk",sans-serif';
       const titleLines=this._wrap(ctx,b.pitch,maxW), lh=ps*1.12;
-      ctx.font='500 '+ss+'px Montserrat,sans-serif'; const slh=ss*1.24;
+      ctx.font='500 '+ss+'px Manrope,sans-serif'; const slh=ss*1.24;
       const bulletBlocks = b.bullets ? b.bullets.map(bl=>['\u2022  '+bl]) : [];
       let maxBW=0; for(const blk of bulletBlocks) maxBW=Math.max(maxBW,ctx.measureText(blk[0]).width);
       const subLines = (!b.bullets && b.sub) ? this._wrap(ctx,b.sub,maxW) : null;
@@ -1233,20 +1233,20 @@ void main(){
       if((h<=avail && maxBW<=availW) || ps<=10) break; scale*=0.92;
     }
     let ty=cy - L.h/2 + L.lh/2 - R*0.02;
-    ctx.font='600 '+L.ps+'px Montserrat,sans-serif'; ctx.fillStyle='#e40f00'; ctx.shadowColor='rgba(255,255,255,.92)'; ctx.shadowBlur=9;
+    ctx.font='600 '+L.ps+'px "Space Grotesk",sans-serif'; ctx.fillStyle='#e40f00'; ctx.shadowColor='rgba(255,255,255,.92)'; ctx.shadowBlur=9;
     for(const ln of L.titleLines){ ctx.fillText(ln,cx,ty); ty+=L.lh; }
     ty += L.ps*0.5; ctx.fillStyle='#0c3550'; ctx.shadowBlur=4;
-    if(L.bulletBlocks.length){ ctx.font='500 '+L.ss+'px Montserrat,sans-serif';
+    if(L.bulletBlocks.length){ ctx.font='500 '+L.ss+'px Manrope,sans-serif';
       let target=0; for(const blk of L.bulletBlocks) for(const ln of blk) target=Math.max(target,ctx.measureText(ln).width);
       const lx=cx-target/2; ctx.textAlign='left';
       for(const blk of L.bulletBlocks){ for(const ln of blk){ ctx.fillText(ln,lx,ty); ty+=L.slh; } ty+=L.ss*0.30; }
       ty-=L.ss*0.30; ctx.textAlign='center'; }
-    if(L.subLines){ ctx.font='500 '+L.ss+'px Montserrat,sans-serif';
+    if(L.subLines){ ctx.font='500 '+L.ss+'px Manrope,sans-serif';
       let target=0; for(const ln of L.subLines) target=Math.max(target,ctx.measureText(ln).width);
       ctx.textAlign='left';
       for(let i=0;i<L.subLines.length;i++){ this._drawJustified(ctx,L.subLines[i],target,cx-target/2,ty,i===L.subLines.length-1); ty+=L.slh; }
       ctx.textAlign='center'; }
-    if(L.tailLines){ ty+=L.ss*0.85; ctx.font='600 '+L.ss+'px Montserrat,sans-serif';
+    if(L.tailLines){ ty+=L.ss*0.85; ctx.font='600 '+L.ss+'px "Space Grotesk",sans-serif';
       for(const ln of L.tailLines){ ctx.fillText(ln,cx,ty); ty+=L.slh; } }
     ctx.restore();
   }

@@ -3,8 +3,35 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="icon" type="image/png" sizes="64x64" href="/favicon.png">
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+
+<!-- Primary -->
+<title>RedPebble.ai — AI Applied Intelligently</title>
+<meta name="description" content="Creating AI Ripples That Transform Your Organization">
+<link rel="canonical" href="https://redpebble.ai/">
+<meta name="theme-color" content="#000000">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png">
+<link rel="icon" type="image/png" href="/assets/favicon.png">
+<link rel="apple-touch-icon" href="/assets/favicon.png">
+
+<!-- Open Graph (WhatsApp, LinkedIn, Facebook, iMessage) -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="RedPebble.ai">
+<meta property="og:title" content="RedPebble.ai — AI Applied Intelligently">
+<meta property="og:description" content="Creating AI Ripples That Transform Your Organization">
+<meta property="og:url" content="https://redpebble.ai/">
+<meta property="og:image" content="https://redpebble.ai/assets/og-image.png">
+<meta property="og:image:secure_url" content="https://redpebble.ai/assets/og-image.png">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="RedPebble.ai — AI Applied Intelligently">
+
+<!-- Twitter / X -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="RedPebble.ai — AI Applied Intelligently">
+<meta name="twitter:description" content="Creating AI Ripples That Transform Your Organization">
+<meta name="twitter:image" content="https://redpebble.ai/assets/og-image.png">
+
 <script src="./support.js"></script>
 </head>
 <body>
@@ -12,10 +39,10 @@
 <div style="position:fixed; inset:0; background:#000; overflow:hidden;">
   <template id="__bundler_thumbnail"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="#0a0a0a"/><ellipse cx="50" cy="58" rx="27" ry="13" fill="#7c0a00"/><ellipse cx="50" cy="50" rx="22" ry="12" fill="#e40f00"/><ellipse cx="44" cy="45" rx="8" ry="4" fill="#ff7a6e" opacity="0.8"/><text x="50" y="84" font-family="sans-serif" font-size="11" fill="#f6f7f8" text-anchor="middle" font-weight="700">RedPebble</text></svg></template>
   <sc-if value="{{ mobile }}" hint-placeholder-val="{{ true }}">
-    <dc-import name="RedPebble Mobile" style="position:absolute; inset:0;" hint-size="100%,100%"></dc-import>
+    <dc-import name="main" style="position:absolute; inset:0;" hint-size="100%,100%"></dc-import>
   </sc-if>
   <sc-if value="{{ desktop }}" hint-placeholder-val="{{ false }}">
-    <dc-import name="RedPebble Desktop" style="position:absolute; inset:0;" hint-size="100%,100%"></dc-import>
+    <dc-import name="skip_pebble" style="position:absolute; inset:0;" hint-size="100%,100%"></dc-import>
   </sc-if>
 </div>
 </x-dc>
