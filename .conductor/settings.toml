@@ -1,0 +1,22 @@
+"$schema" = "https://conductor.build/schemas/settings.repo.schema.json"
+
+[scripts]
+# Static site — nothing to install. Just sanity-check the deploy dir exists.
+setup = "test -f public/index.html && echo 'RedPebble: static site, no deps to install.'"
+# Each workspace gets its own port block, so previews can run side by side.
+run_mode = "concurrent"
+# Remove wrangler's local dev cache (not gitignored) before the worktree goes.
+archive = "rm -rf .wrangler"
+
+# Mirrors production (Cloudflare assets + html_handling redirects).
+[scripts.run.preview]
+available_in = [ "local" ]
+command = "WRANGLER_SEND_METRICS=false npx --yes wrangler@4 dev --ip 127.0.0.1 --port $CONDUCTOR_PORT --inspector-port $((CONDUCTOR_PORT + 1))"
+default = true
+icon = "cloud"
+
+# Zero-dependency fallback (no Cloudflare redirect behavior).
+[scripts.run.static]
+available_in = [ "local" ]
+command = "python3 -m http.server $CONDUCTOR_PORT --bind 127.0.0.1 --directory public"
+icon = "globe"
