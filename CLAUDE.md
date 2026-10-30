@@ -39,6 +39,9 @@ public/
   privacy.html                # plain static Privacy Policy, served at /privacy (HAND-AUTHORED HERE —
                               #   not in the design-tool zip; keep it when re-flattening). Linked from
                               #   a line under the contact form's Send button in both views.
+  terms.html                  # plain static Terms of Service, served at /terms (HAND-AUTHORED HERE, same
+                              #   styles as privacy.html). privacy.html §06 + terms.html §04 are the YouTube
+                              #   API compliance text (YouTube ToS, Google Privacy Policy, deletion/revoke).
   redpebble-shared.js         # shared logic: sendContact() etc. (CONTACT_EMAIL = ag@redpebble.ai)
   support.js                  # DC runtime (never hand-edit)
   assets/...                  # shared images / 3D models; views reference them as ../assets/...
@@ -60,8 +63,11 @@ To deploy a new zip:
    `*.dc.html` views + `redpebble-shared.js` + `support.js` as-is (keep exact names); copy
    `assets/` → `public/assets/`.
 2. Do NOT deploy `archive/` (kept in `.gitignore`).
-3. Keep `public/privacy.html`, and re-add the "By sending, you agree to our Privacy Policy" line under
-   the Send button in both views if the new zip doesn't already have it.
+3. Keep `public/privacy.html` and `public/terms.html`, and re-add (in both views, if the new zip lacks them):
+   - the "By sending, you agree to our Privacy Policy and Terms" line under the Send button;
+   - the `.rp-legal` footer strip (YouTube logo + "RedPebble on YouTube" · Privacy Policy · Terms of
+     Service). It's YouTube compliance evidence: the homepage must show the Privacy link with YouTube
+     branding. Mobile: bottom-centre of the root div; desktop: bottom-right.
 4. Commit & push to `main`; Cloudflare auto-rebuilds. Verify at https://redpebble.ai.
 
 ## Conventions
