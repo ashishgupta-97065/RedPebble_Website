@@ -76,6 +76,12 @@
     <span style="display:inline-block; animation:rp-nudge 1.8s ease-in-out infinite;">&rarr;</span>
   </div>
 
+  <div class="rp-legal" style="position:absolute; right:36px; bottom:36px; z-index:8; display:flex; align-items:center; gap:10px; font-family:'Manrope',sans-serif; font-weight:500; font-size:12.5px; letter-spacing:.02em; color:rgba(246,247,248,.72); white-space:nowrap; text-shadow:0 1px 10px rgba(0,0,0,.6);">
+    <a href="https://www.youtube.com/@RedPebbleAiEducation" target="_blank" rel="noopener" aria-label="RedPebble on YouTube" style="display:inline-flex; align-items:center; gap:7px; color:inherit; text-decoration:none;"><svg width="20" height="14" viewBox="0 0 28 20" aria-hidden="true" style="display:block; flex:0 0 auto;"><path d="M27.4 3.1A3.5 3.5 0 0 0 24.9.6C22.7 0 14 0 14 0S5.3 0 3.1.6A3.5 3.5 0 0 0 .6 3.1C0 5.3 0 10 0 10s0 4.7.6 6.9a3.5 3.5 0 0 0 2.5 2.5C5.3 20 14 20 14 20s8.7 0 10.9-.6a3.5 3.5 0 0 0 2.5-2.5c.6-2.2.6-6.9.6-6.9s0-4.7-.6-6.9z" fill="#FF0000"/><path d="M11.2 14.3 18.4 10l-7.2-4.3z" fill="#FFFFFF"/></svg><span>RedPebble on YouTube</span></a><span style="opacity:.4;">&middot;</span>
+    <a href="/privacy" target="_blank" rel="noopener" style="color:inherit; text-decoration:none;">Privacy Policy</a><span style="opacity:.4;">&middot;</span>
+    <a href="/terms" target="_blank" rel="noopener" style="color:inherit; text-decoration:none;">Terms of Service</a>
+  </div>
+
   <div ref="{{ contactRef }}" style="position:absolute; inset:0; z-index:40; display:flex; align-items:center; justify-content:center; padding:28px; opacity:0; pointer-events:none; transition:opacity .65s ease; background:radial-gradient(120% 120% at 50% 40%, rgba(6,14,22,.32) 0%, rgba(6,14,22,.62) 100%); backdrop-filter:blur(4px); cursor:default;">
     <div style="position:relative; width:min(1040px,94vw); max-height:90vh; overflow:auto; display:grid; grid-template-columns:0.86fr 1.14fr; border-radius:24px; background:rgba(9,19,29,.5); backdrop-filter:blur(26px) saturate(1.25); border:1px solid rgba(255,255,255,.16); box-shadow:0 50px 130px rgba(0,0,0,.5); color:#f6fbff;">
 
@@ -127,7 +133,7 @@
             </div>
             <button ref="{{ contactSubmitRef }}" type="submit" style="margin-top:6px; font-family:'Manrope',sans-serif; font-weight:600; font-size:15px; letter-spacing:.01em; border:none; cursor:pointer; padding:16px 28px; border-radius:999px; background:#e40f00; color:#fff; box-shadow:0 14px 40px rgba(228,15,0,.42); transition:transform .2s ease, box-shadow .2s ease;" style-hover="transform:translateY(-2px); box-shadow:0 18px 48px rgba(228,15,0,.5);">Send it &rarr;</button>
           </form>
-          <p style="font-family:'Manrope',sans-serif; font-weight:400; font-size:12px; letter-spacing:.02em; opacity:.55; margin:14px 0 0; text-align:center;">By sending, you agree to our <a href="/privacy" target="_blank" rel="noopener" style="color:inherit; text-decoration:underline;">Privacy Policy</a>.</p>
+          <p style="font-family:'Manrope',sans-serif; font-weight:400; font-size:12px; letter-spacing:.02em; opacity:.55; margin:14px 0 0; text-align:center;">By sending, you agree to our <a href="/privacy" target="_blank" rel="noopener" style="color:inherit; text-decoration:underline;">Privacy Policy</a> and <a href="/terms" target="_blank" rel="noopener" style="color:inherit; text-decoration:underline;">Terms</a>.</p>
         </div>
 
         <div ref="{{ contactThanksRef }}" style="display:none; flex-direction:column; align-items:flex-start; justify-content:center; min-height:340px;">
